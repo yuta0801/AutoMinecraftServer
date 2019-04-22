@@ -45,6 +45,7 @@ function ver(e) {
 const electron = require('electron')
 const remote = electron.remote
 const ipc = electron.ipcRenderer//require('ipc');
+const clipboard = electron.clipboard
 const dialog = remote.dialog//remote.require('dialog');
 const browserWindow = remote.BrowserWindow//remote.require('browser-window');
 const app = remote.app
@@ -79,11 +80,8 @@ $(document).on('contextmenu', e => {
   } else if ($(e.target).parent().get(0).className === 'player') {
     const name = $(e.target).text()
     const id = $(e.target).attr('class').slice(0, $(e.target).attr('class').indexOf('_'))
-    $('#copy_player').remove()
-    $('body').append('<button id="copy_player" data-clipboard-text="' + name + '" style="display:none;"></button>')
-    new Clipboard('#copy_player')
     remote.Menu.buildFromTemplate([
-      {label: '名前をコピー', click: function() { $('#copy_player').trigger('click') }},
+      {label: '名前をコピー', click: function() { clipboard.writeText(name) }},
       {type: 'separator'},
       {label: '「' + name + '」をBAN', click: function() { send_command(id, 'ban ' + name) }},
       {label: '「' + name + '」のIPをBAN', click: function() { send_command(id, 'ban-ip ' + name) }},
@@ -1185,8 +1183,8 @@ function create_detail(extra) {
         evt.stopPropagation()
         if (!$(this).attr('aria-describedby')) $(this).popover('show')
         else { $(this).popover('hide'); return }
-        const c = new Clipboard('.pop_button')
-        c.on('success', e_ => {
+        $('.pop_button').click(function () {
+          clipboard.writeText($(this).data('clipboard-text'))
           $('.pop_button').text('コピーしました')
           setTimeout(() => { $('.pop_button').text('アドレスをコピーする') }, 2000)
         })
@@ -1378,15 +1376,6 @@ function end_progress(id, jar) {
   profile_close = false
   $('#profile_modal').modal('hide')
   profile_ready(id, true)
-}
-
-//外部アドレスコピー
-function copy_address(id) {
-  (new Clipboard('#' + id + '_pop_button'))
-    .on('success', function(e) {
-      $(this).text('コピーしました')
-      setTimeout(function() { $(this).text('アドレスをコピーする') }, 2000)
-    })
 }
 
 //EULA処理
