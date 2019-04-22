@@ -388,22 +388,23 @@
 <button id="copy_player" style="display:none;"></button>
 <div id="dpi"></div>
 <div id="loading"><div id="loading_bar"></div><div id="loading_text">読み込み中...</div></div>
-<script src="js/jquery-2.1.4.min.js"></script>
 <script>
-if (typeof module === 'object' && typeof module.exports !== 'undefined') {
-    window.$ = window.jQuery = module.exports;
-}
+window.$ = window.jQuery = require('jquery');
+require('jquery-ui')
+require('bootstrap-switch')
+JSZip = require('jszip');
+Clipboard = require('clipboard');
 </script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.dataTables.min.js"></script>
 <script src="js/dataTables.bootstrap.min.js"></script>
 <!--<script src="js/moment.min.js"></script>
 <script src="js/datetime-moment.js"></script>-->
-<script src="js/bootstrap-switch.min.js"></script>
-<script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+<!-- <script src="js/bootstrap-switch.min.js"></script> -->
+<!-- <script src="js/jquery-ui-1.9.2.custom.min.js"></script> -->
 <script src="js/jquery.auto-complete.js"></script>
-<script src="js/jszip.min.js"></script>
-<script src="js/clipboard.min.js"></script>
+<!-- <script src="js/jszip.min.js"></script> -->
+<!-- <script src="js/clipboard.min.js"></script> -->
 <script src="js/core.js"></script>
 </body>
 </html>
