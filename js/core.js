@@ -1,10 +1,6 @@
+/* eslint-env browser */
 /* global $ */
 /* global process */
-let slash
-if (process.platform === 'win32')
-  slash = '\\'
-else
-  slash = '/'
 const dpi = $('#dpi').outerHeight()
 //$('#dpi').remove();
 $('body').css('zoom', dpi / 72 * 100 + '%')
@@ -116,8 +112,8 @@ if (process.platform !== 'win32') {
   p__.on('exit', code => { if (code === 0) open_d = 'pcmanfm' })
 }
 //作業ディレクトリ
-if (process.platform === 'win32') base_dir = path.dirname(fs.realpathSync('./')) + slash
-else base_dir = path.dirname(fs.realpathSync('')) + slash
+if (process.platform === 'win32') base_dir = path.dirname(fs.realpathSync('./'))
+else base_dir = path.dirname(fs.realpathSync(''))
 //ウィンドウ設定
 $('#report_modal, #manage_modal, #profile_modal, #settings_modal, #port_modal').draggable({handle: '.modal-header'})
 $('#report_modal, #manage_modal, #profile_modal').resizable()
@@ -146,7 +142,7 @@ $.ajax({ url: org + 'master/parts/versions.html', type: 'GET',
   success: function(data) { $('#version_body').html(data) }, error: function(xhr, status, err) {} })
 
 //プロファイル、設定ファイル読み込み
-fs.readFile(base_dir + 'profile.ams', 'utf8', (e, t) => {
+fs.readFile(path.join(base_dir, 'profile.ams'), 'utf8', (e, t) => {
   if (e) {
     load_end(true)
     return
@@ -162,7 +158,7 @@ fs.readFile(base_dir + 'profile.ams', 'utf8', (e, t) => {
   //reload_profile();
   create_detail(null)
 })
-fs.readFile(base_dir + 'settings.ams', 'utf8', (e, t) => {
+fs.readFile(path.join(base_dir, 'settings.ams'), 'utf8', (e, t) => {
   if (!e) {
     const s = JSON.parse(t)
     for (const name in s) settings[name] = s[name]
@@ -305,21 +301,21 @@ $('#profile_save').click(() => {
   if (!p) {
     //フォルダ自動指定
     if ($('#folder_input').val() === '') {
-      const name = $('#name').val().replace(/:/g, '_').replace(/;/g, '_').replace(/\\/g, '_').replace(slash, '_').replace(/\|/g, '_').replace(/,/g, '_').replace(/\*/g, '_').replace(/\?/g, '_').replace(/"/g, '_').replace(/</g, '_').replace(/>/g, '_')
-      a.folder = path.dirname(fs.realpathSync('./')) + slash + name
+      const name = $('#name').val().replace(/:/g, '_').replace(/;/g, '_').replace(/\\/g, '_').replace(/\//g, '_').replace(/\|/g, '_').replace(/,/g, '_').replace(/\*/g, '_').replace(/\?/g, '_').replace(/"/g, '_').replace(/</g, '_').replace(/>/g, '_')
+      a.folder = path.join(path.dirname(fs.realpathSync('./')), name)
       try { fs.mkdirSync(a.folder) } catch (ex) {}
       $('#folder_input').val(a.folder)
     }
     profiles[a.id] = a
-    fs.writeFile(base_dir + 'profile.ams', JSON.stringify(profiles), error => { /* handle error */ })
+    fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
     if ($('#profile_modal').data('zip_bool')) {
       if ($('#jar_input').val() !== '') {
-        a.jar = a.jar.replace('..' + slash, $('#folder_input').val() + slash)
+        a.jar = a.jar.replace(/^\.\./, $('#folder_input').val())
         $('#jar_input').val(a.jar)
         progress(a.id, undefined, { data: $('#profile_modal').data('zip'), type: $('#profile_modal').data('type'), base: $('#profile_modal').data('base'), count: $('#profile_modal').data('count') })
       }
       else if ($('#jar_choice').text().trim() !== '必ず選択してください') {
-        a.jar = $('#folder_input').val() + slash + $('#jar_choice').text().trim()
+        a.jar = path.join($('#folder_input').val(), $('#jar_choice').text().trim())
         $('#jar_input_div').show()
         $('#jar_choice_div').hide()
         $('#jar_input').val(a.jar)
@@ -345,7 +341,7 @@ $('#profile_save').click(() => {
   }
   else {
     profiles[a.id] = a
-    fs.writeFile(base_dir + 'profile.ams', JSON.stringify(profiles), error => { /* handle error */ })
+    fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
     if ($('#change_check').prop('checked')) {
       var index = $('#version').text().indexOf(' ')
       progress(a.id, { ver: $('#version').text().slice(index + 1, -1), type: $('#version').text().slice(0, index), latest: $('#latest_check').prop('checked') })
@@ -485,14 +481,14 @@ ipc.on('load_logs', (e, data) => {
   }
   $.each(data, (i, e_) => {
     if (i === 0) html += '<tr><th>すべてのファイル</th><th><button type="button" class="btn btn-danger log_del" data-file="' + e_ + '">削除</button></th></tr>'
-    else html += '<tr><th>' + e_.slice(e_.lastIndexOf(slash) + slash.length) + '</th><th><button type="button" class="btn btn-danger log_del" data-file="' + e_ + '">削除</button></th></tr>'
+    else html += '<tr><th>' + path.basename(e_) + '</th><th><button type="button" class="btn btn-danger log_del" data-file="' + e_ + '">削除</button></th></tr>'
   })
   $('#log_content').html('<table class="table table-hover table-condensed manage_table"><thead><tr><th data-sortable="false">ファイル</th><th data-sortable="false">操作</th></tr></thead><tbody>' + html + '</tbody></table>')
   resize()
   $('.log_del').click(function(event) {
     const dir = $(this).data('file')
     if (dir.slice(-4) === 'logs') {
-      del([dir + slash + '**', '!' + dir], { force: true })
+      del([path.join(dir, '**'), '!' + dir], { force: true })
       $('#log_content').html('<h3>ログファイルはありません</h3>')
     } else {
       del(dir, { force: true })
@@ -513,7 +509,7 @@ ipc.on('load_backup', (e, data) => {
   $.each(data.data, (i, e_) => {
     if (i === 0) html = '<tr><th><a onclick="open_directry(\'' + tohtml(e_) + '\');">全てのバックアップ</a></th><th></th><th><button type="button" class="btn btn-danger backup_del" data-folder="' + e_ + '">削除</button></th></tr>'
     else {
-      const date = e_.slice(e_.lastIndexOf(slash) + slash.length)
+      const date = path.basename(e_)
       html += '<tr><th><a onclick="open_directry(\'' + tohtml(e_) + '\');">' + date + '</a></th><th><button type="button" class="btn btn-primary backup_restore" data-folder="' + e_ + '" data-id="' + data.id + '">復元</button></th><th><button type="button" class="btn btn-danger backup_del" data-folder="' + e_ + '">削除</button></th></tr>'
     }
   })
@@ -522,7 +518,7 @@ ipc.on('load_backup', (e, data) => {
   $('.backup_del').click(function(event) {
     const dir = $(this).data('folder')
     dialog.showMessageBox(browserWindow.getFocusedWindow(), {
-      title: 'バックアップ削除', type: 'warning', message: dir.slice(dir.lastIndexOf(slash) + slash.length) + 'のバックアップを削除しますか？',
+      title: 'バックアップ削除', type: 'warning', message: path.basename(dir) + 'のバックアップを削除しますか？',
       detail: 'バックアップは削除したら復元できません\n(既存のワールドデータに影響はありません)', buttons: ['削除', 'キャンセル'], cancelId: -1,
       defaultId: 1 },
     function(b) {
@@ -538,7 +534,7 @@ ipc.on('load_backup', (e, data) => {
     const id = $(this).data('id')
     dialog.showMessageBox(browserWindow.getFocusedWindow(), {
       title: 'ワールド復元', type: 'warning',
-      message: dir.slice(dir.lastIndexOf(slash) + slash.length) + '時点のデータを復元しますか？',
+      message: path.basename(dir) + '時点のデータを復元しますか？',
       detail: 'バックアップされたデータで上書きされます\n(現在のワールドデータはバックアップされます。)',
       buttons: ['復元', 'キャンセル'], cancelId: -1, defaultId: 1 },
     b => {
@@ -551,7 +547,7 @@ ipc.on('restore_success', () => { dialog.showMessageBox(browserWindow.getFocused
 //設定画面
 $('#settings_modal').on('show.bs.modal', () => {
   for (const name in settings) {
-    if (typeof settings[name] === 'boolean') $('#' + name).prop('checked', settings[name]).change() 
+    if (typeof settings[name] === 'boolean') $('#' + name).prop('checked', settings[name]).change()
     else $('#' + name).val(settings[name])
   }
 })
@@ -569,7 +565,7 @@ $('#settings_save').click(() => {
     if (s.length === a + 1) {
       ipc.send('settings', settings)
       $('#settings_modal').modal('hide')
-      fs.writeFile(base_dir + 'settings.ams', JSON.stringify(settings), error => { /* handle error */ })
+      fs.writeFile(path.join(base_dir, 'settings.ams'), JSON.stringify(settings), error => { /* handle error */ })
       if (bd_bak !== settings.backup_dir_bool) {
         $('#loading_text').text('バックアップデータを移動中...')
         $('#loading').show()
@@ -770,8 +766,8 @@ function start_server(id) {
     fs.mkdirSync(dir(p))
 
   function dir(p) {
-    if (settings.backup_dir_bool) return settings.backup_dir + slash + p.id
-    else return p.folder + slash + 'backup'
+    if (settings.backup_dir_bool) return path.join(settings.backup_dir, p.id)
+    else return path.join(p.folder, 'backup')
   }
 
   function stopped_server(code) {
@@ -1082,7 +1078,7 @@ function load_data(directory) {
     fs.readdir(d_, (err, files) => {
       const jar = jar_check(files)
       if (jar.length === 0) return
-      else if (jar.length === 1) $('#jar_input').val(d_ + slash + jar[0])
+      else if (jar.length === 1) $('#jar_input').val(path.join(d_, jar[0]))
       $('#version').parent().parent().hide()
       /*var html = '';
                 for (var jar_ in jar){ html += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">' + path.basename(jar[jar_]) + '</a></li>'; }
@@ -1106,7 +1102,7 @@ function load_zip(base_file) {
     $('#name').val(path.basename($('#profile_modal').data('zip'), '.zip'))
     if (a.type === 'all') {
       const jar = jar_check(a.list)
-      if (jar.length === 1) $('#jar_input').val('..' + slash + path.basename(jar[0]).replace(/\\/g, slash))
+      if (jar.length === 1) $('#jar_input').val(path.join('..', path.basename(jar[0])))
       else if (jar.length !== 0) {
         let html = ''
         for (const jar_ in jar) { html += '<li role="presentation"><a role="menuitem" tabindex="-1" href="#">' + path.basename(jar[jar_]) + '</a></li>' }
@@ -1252,7 +1248,7 @@ function remove_profile(id) {
       try { del(p.folder, { force: true })
       } catch (ex) { alert('フォルダーを削除できませんでした\nパス:' + p.folder) }
     delete profiles[p.id]
-    fs.writeFile(base_dir + 'profile.ams', JSON.stringify(profiles), error => { /* handle error */ })
+    fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
     $('#' + p.id + '_tab').parent().remove()
     $('#' + p.id + '_content').remove()
   }
@@ -1313,10 +1309,10 @@ function start_download(id, ver, mode, latest, per) {
         percent(p(state.percent * 100), 'ダウンロード中... ' + round(state.time.remaining) + '(' + p(state.percent * 100) + '% ' + Math.round(state.size.transferred / 1000) + '/' + Math.round(state.size.total / 1000) + 'KB)')
       })
       .on('error', err => { })
-      .pipe(fs.createWriteStream(profiles[id].folder + slash + file))
+      .pipe(fs.createWriteStream(path.join(profiles[id].folder, file)))
       .on('close', err => {
         percent(p(100), 'ダウンロード完了')
-        end_progress(id, profiles[id].folder + slash + file)
+        end_progress(id, path.join(profiles[id].folder, file))
       })
   }
   else {
@@ -1345,7 +1341,7 @@ function start_download(id, ver, mode, latest, per) {
             percent(p(Math.round(5 + state.percent * 100 * 0.1)), 'ダウンロード中... ' + round(state.time.remaining) + '(' + p(Math.round(5 + state.percent * 100 * 0.1)) + '% ' + Math.round(state.size.transferred / 1000) + '/' + Math.round(state.size.total / 1000) + 'KB)')
           })
           .on('error', err => {})
-          .pipe(fs.createWriteStream(profiles[id].folder + slash + file))
+          .pipe(fs.createWriteStream(path.join(profiles[id].folder, file)))
           .on('close', err => {
             let c = 0
             percent(p(15), 'インストール開始中...(' + p(15) + '%)')
@@ -1360,7 +1356,7 @@ function start_download(id, ver, mode, latest, per) {
             //e.stderr.on('data', function(data){ console.log(data.toString()); })
             e.on('exit', code => {
               percent(p(100), 'インストール完了')
-              end_progress(id, profiles[id].folder + slash + file)
+              end_progress(id, path.join(profiles[id].folder, file))
             })
           })
       },
@@ -1373,7 +1369,7 @@ function start_download(id, ver, mode, latest, per) {
 //終了処理
 function end_progress(id, jar) {
   if (jar !== undefined) profiles[id].jar = jar
-  fs.writeFile(base_dir + 'profile.ams', JSON.stringify(profiles), error => { /* handle error */ })
+  fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
   $('#' + id + '_tab').parent().remove()
   $('#' + id + '_content').remove()
   $('.active').removeClass('active')
@@ -1395,9 +1391,9 @@ function copy_address(id) {
 
 //EULA処理
 function eula_agree(id) {
-  fs.readFile(profiles[id].folder + slash + 'eula.txt', 'utf8', (e, t) => {
+  fs.readFile(path.join(profiles[id].folder, 'eula.txt'), 'utf8', (e, t) => {
     if (e) return
-    fs.writeFile(profiles[id].folder + slash + 'eula.txt', t.replace('false', 'true'), error => { /* handle error */ })
+    fs.writeFile(path.join(profiles[id].folder, 'eula.txt'), t.replace('false', 'true'), error => { /* handle error */ })
     start_server(id)
   })
 }
@@ -1408,7 +1404,7 @@ function save_indices(id, text) {
     return
   if (text !== undefined)
     indices[id].push($('#' + id + '_cmd_input').val())
-  fs.writeFile(profiles[id].folder + slash + 'indices.ams', JSON.stringify(indices[id]), error => { /* handle error */ })
+  fs.writeFile(path.join(profiles[id].folder, 'indices.ams'), JSON.stringify(indices[id]), error => { /* handle error */ })
 }
 
 //0の挿入
@@ -1439,7 +1435,7 @@ function tohtml(t) {
 //UUID作成
 function uuid() {
   const S4 = function() {  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1) }
-  return  S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4() 
+  return  S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4()
 }
 
 function getAvatarURL(name, callback) {
@@ -1479,9 +1475,9 @@ function open_directry(d) {
 
 //バージョン比較
 function versionCompare(v1, v2, options) {
-  let lexicographical = options && options.lexicographical,      
-    zeroExtend = options && options.zeroExtend,      
-    v1parts = v1.split('.'),      
+  let lexicographical = options && options.lexicographical,
+    zeroExtend = options && options.zeroExtend,
+    v1parts = v1.split('.'),
     v2parts = v2.split('.')
   function isValidPart(x) {
     return (lexicographical ? /^\d+[A-Za-z]*$/ : /^\d+$/).test(x)
