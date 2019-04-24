@@ -1,46 +1,52 @@
 /* eslint-env browser */
 /* global $ */
 /* global process */
+
+
+
+//解像度？？
 const dpi = $('#dpi').outerHeight()
 //$('#dpi').remove();
 $('body').css('zoom', dpi / 72 * 100 + '%')
 
 let load_end_count = 0
 let profiles = {}
+
 //プロファイル
 const settings = { 'log_att': true, 'backup_notify': false, 'backup_dir_bool': false, 'backup_dir': '' }
+
 //設定
 const logs = {}
+
 //DataTableオブジェクト
 const processes = {}
+
 //Javaプロセス
 const players = {}
+
 //プレイヤーリスト
 const timers = {}
+
 //タイマー
 const nopeoples = {}
+
 //無人タイマー
 const timer_count = {}
+
 //タイマーカウント
 const nopeople_count = {}
+
 //無人タイマーカウント
 const indices = {}
+
 //予測変換
 const port = {}
+
 //ポート情報
 const backup_flag = {}
+
 //バックアップのログ削除フラグ
 const restart_flag = {}
-//再起動フラグ
-let profile_close = false
-let open_d = ''
-let base_dir = ''
-
-function resize() { $(window).trigger('resize') }
-
-function ver(e) {
-  $('#version').html($(e).text() + ' <span class="caret"></span>')
-}
 
 const electron = require('electron')
 const remote = electron.remote
@@ -57,11 +63,36 @@ const encoding = require('encoding-japanese')
 const upnp = require('nat-upnp').createClient()
 const request = require('request')
 
+
+
+//再起動フラグ
+let profile_close = false
+let open_d = ''
+let base_dir = ''
+
+
+
+
+
+//
+function resize() { $(window).trigger('resize') }
+
+
+
+//
+function ver(e) {
+  $('#version').html($(e).text() + ' <span class="caret"></span>')
+}
+
+
+
 //右クリックメニュー
 $(document).on('contextmenu', e => {
   const text = window.getSelection().toString()
   const b = text !== ''? true : false
   const text_ = text.length > 15? '...' : ''
+
+  //
   if ($(e.target).get(0).tagName === 'INPUT') {
     if ($(e.target).prop('disabled') === true) return
     remote.Menu.buildFromTemplate([
@@ -77,7 +108,10 @@ $(document).on('contextmenu', e => {
       {label: '取消', accelerator: 'CmdOrCtrl+Z', role: 'undo'},
       {label: 'やり直し', accelerator: 'CmdOrCtrl+Y', role: 'redo'},
     ]).popup(remote.getCurrentWindow())
-  } else if ($(e.target).parent().get(0).className === 'player') {
+  }
+
+  //
+  else if ($(e.target).parent().get(0).className === 'player') {
     const name = $(e.target).text()
     const id = $(e.target).attr('class').slice(0, $(e.target).attr('class').indexOf('_'))
     remote.Menu.buildFromTemplate([
@@ -92,7 +126,10 @@ $(document).on('contextmenu', e => {
       {label: '「' + name + '」をキル', click: function() { send_command(id, 'kill ' + name) }},
       {label: '「' + name + '」のアイテムを削除', click: function() { send_command(id, 'clear ' + name) }},
     ]).popup(remote.getCurrentWindow())
-  } else if (b)
+  }
+
+  //
+  else if (b)
     remote.Menu.buildFromTemplate([
       {label: 'コピー', accelerator: 'CmdOrCtrl+C', role: 'copy', visible: b},
       {label: '「' + text.slice(0, 15) + text_ + '」を検索', enabled: b, click: function() {
@@ -100,6 +137,9 @@ $(document).on('contextmenu', e => {
       }},
     ]).popup(remote.getCurrentWindow())
 })
+
+
+
 //使用するエクスプローラー判定
 if (process.platform !== 'win32') {
   const p = exec('which', ['nautilus'])
@@ -109,20 +149,35 @@ if (process.platform !== 'win32') {
   const p__ = exec('which', ['pcmanfm'])
   p__.on('exit', code => { if (code === 0) open_d = 'pcmanfm' })
 }
+
+
+
 //作業ディレクトリ
 if (process.platform === 'win32') base_dir = path.dirname(fs.realpathSync('./'))
 else base_dir = path.dirname(fs.realpathSync(''))
+
+
+
 //ウィンドウ設定
 $('#report_modal, #manage_modal, #profile_modal, #settings_modal, #port_modal').draggable({handle: '.modal-header'})
 $('#report_modal, #manage_modal, #profile_modal').resizable()
+
+
+
 //バージョン表示
 $('.update').text('バージョン:' + app.getVersion())
+
+
+
 //初期設定
 $.fn.bootstrapSwitch.defaults.size = 'mini'
 $.fn.bootstrapSwitch.defaults.onText = '有効'
 $.fn.bootstrapSwitch.defaults.offText = '無効'
 $.fn.bootstrapSwitch.defaults.handleWidth = 50
 $('[name="toggle"]').bootstrapSwitch()
+
+
+
 //リサイズイベント
 $(window).on('resize', () => {
   const h = $(window).height() / (dpi / 72)// - 20;
@@ -130,14 +185,22 @@ $(window).on('resize', () => {
   $.each(profiles, (i, e) => { $('#' + e.id + '_content').find('.dataTables_scrollBody').height(h - 265 + 'px') })
   if ($(window).width() > 1380 && $('#menu').data('show')) menu()
 })
+
+
+
 //$.fn.dataTable.moment('YYYY/MM//DD HH:mm:ss.SSS');
 //最新情報読み込み
 const org = 'https://raw.githubusercontent.com/AutoMinecraftServer/AutoMinecraftServer/'
 $.ajax({ url: org + 'master/parts/info.html', type: 'GET',
   success: function(data) { $('.info').html(data) }, error: function(xhr, status, err) {} })
+
+
+
 //Minecraftバージョン情報取得
 $.ajax({ url: org + 'master/parts/versions.html', type: 'GET',
   success: function(data) { $('#version_body').html(data) }, error: function(xhr, status, err) {} })
+
+
 
 //プロファイル、設定ファイル読み込み
 fs.readFile(path.join(base_dir, 'profile.ams'), 'utf8', (e, t) => {
@@ -156,6 +219,10 @@ fs.readFile(path.join(base_dir, 'profile.ams'), 'utf8', (e, t) => {
   //reload_profile();
   create_detail(null)
 })
+
+
+
+//
 fs.readFile(path.join(base_dir, 'settings.ams'), 'utf8', (e, t) => {
   if (!e) {
     const s = JSON.parse(t)
@@ -163,6 +230,9 @@ fs.readFile(path.join(base_dir, 'settings.ams'), 'utf8', (e, t) => {
   }
   ipc.send('settings', settings)
 })
+
+
+
 //アップデート確認
 ipc.on('update', (e, a) => {
   const set = (msg, title) => $('.update').append($('<span>').text(msg).attr('title', title))
@@ -172,9 +242,14 @@ ipc.on('update', (e, a) => {
   if (a === 'update-check-error') set('[アップデートチェックエラー]', 'GitHubに接続できません')
   if (a === 'update-auto-error') set('[自動アップデートエラー]', '手動で更新でしてください')
 })
+
+
+
 //プロファイル設定画面
 $('#profile_modal').on('show.bs.modal', function(event) {
   let a = profiles[$(event.relatedTarget).parent().data('id')]
+
+  //
   if (a === undefined) {
     a = { id: uuid(), name: '', folder: '', jar: '', max_memory: '1024', min_memory: '512', upnp: true, backup: true,
       backup_minute: '10', backup_count: '5' }
@@ -189,11 +264,15 @@ $('#profile_modal').on('show.bs.modal', function(event) {
       else if ($(this).data('type') === 'all') $('#jar_input').attr('placeholder', 'Zipから読み込み/ダウンロードのみ')
     }
   }
+
+  //
   else {
     $('#change_check').parent().parent().show()
     $('#version').parent().parent().hide()
     $('#folder_input, #jar_input').attr('placeholder', '')
   }
+
+  //
   $('#version').removeClass('btn-danger')
   $('.has-error').removeClass('has-error')
   $('#id').val(a.id)
@@ -207,6 +286,10 @@ $('#profile_modal').on('show.bs.modal', function(event) {
   $('#backup_minute').val(a.backup_minute)
   $('#backup_count').val(a.backup_count)
 })
+
+
+
+//
 $('#profile_modal').on('hide.bs.modal', function(e) {
   if (profile_close)
     e.preventDefault()
@@ -229,18 +312,25 @@ $('#profile_modal').on('hide.bs.modal', function(e) {
   $('#progress').width('0%')
   $('#progress_text').text('処理中...(0%)')
 })
+
+
+
+//
 $('#profile_save').click(() => {
   let error = false
   const p = profiles[$('#id').val()] !== undefined
   if (p) {
+
     //名前変更なし
     if ($('#name').val() === profiles[$('#id').val()].name)
       error = false
+
     //名前なし
     else if ($('#name').val() === '') {
       $('#name').parent().addClass('has-error')
       error = true
     }
+
     //名前重複
     else
       $.each(profiles, (i, e) => {
@@ -249,22 +339,27 @@ $('#profile_save').click(() => {
           error = true
         }
       })
+
     //フォルダーチェック
     if (!fs.existsSync($('#folder_input').val()) || path.extname($('#folder_input').val()) !== '') {
       $('#folder_input').parent().addClass('has-error')
       error = true
     }
+
     //Jarチェック
     if (!fs.existsSync($('#jar_input').val()) || path.extname($('#jar_input').val()) !== '.jar') {
       $('#jar_input').parent().addClass('has-error')
       error = true
     }
+
+    //
     if ($('#version').text() === '選択' && $('#version').parent().parent().css('display') !== 'none') {
       $('#version').addClass('btn-danger')
       error = true
     }
   }
   else {
+
     //名前重複(新規)
     $.each(profiles, (i, e) => {
       if ($('#name').val() === e.name) {
@@ -272,11 +367,13 @@ $('#profile_save').click(() => {
         error = true
       }
     })
+
     //フォルダーチェック(新規)
     if (!fs.existsSync($('#folder_input').val()) && $('#folder_input').val() !== '') {
       $('#folder_input').parent().addClass('has-error')
       error = true
     }
+
     //Jarチェック(新規)
     if ($('#version').text() === '選択' && !fs.existsSync($('#jar_input').val()) && $('#jar_input').val().slice(0, 2) !== '..' && $('#jar_choice').text().trim() === '必ず選択してください') {
       if ($('#version').parent().parent().css('display') === 'none') $('#jar_input').parent().addClass('has-error')
@@ -296,7 +393,10 @@ $('#profile_save').click(() => {
   a.backup = $('#backup_check').prop('checked')
   a.backup_minute = $('#backup_minute').val()
   a.backup_count = $('#backup_count').val()
+
+  //
   if (!p) {
+
     //フォルダ自動指定
     if ($('#folder_input').val() === '') {
       const name = $('#name').val().replace(/:/g, '_').replace(/;/g, '_').replace(/\\/g, '_').replace(/\//g, '_').replace(/\|/g, '_').replace(/,/g, '_').replace(/\*/g, '_').replace(/\?/g, '_').replace(/"/g, '_').replace(/</g, '_').replace(/>/g, '_')
@@ -304,14 +404,22 @@ $('#profile_save').click(() => {
       try { fs.mkdirSync(a.folder) } catch (ex) {}
       $('#folder_input').val(a.folder)
     }
+
+    //
     profiles[a.id] = a
     fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
+
+    //
     if ($('#profile_modal').data('zip_bool')) {
+
+      //
       if ($('#jar_input').val() !== '') {
         a.jar = a.jar.replace(/^\.\./, $('#folder_input').val())
         $('#jar_input').val(a.jar)
         progress(a.id, undefined, { data: $('#profile_modal').data('zip'), type: $('#profile_modal').data('type'), base: $('#profile_modal').data('base'), count: $('#profile_modal').data('count') })
       }
+
+      //
       else if ($('#jar_choice').text().trim() !== '必ず選択してください') {
         a.jar = path.join($('#folder_input').val(), $('#jar_choice').text().trim())
         $('#jar_input_div').show()
@@ -319,18 +427,24 @@ $('#profile_save').click(() => {
         $('#jar_input').val(a.jar)
         progress(a.id, undefined, { data: $('#profile_modal').data('zip'), type: $('#profile_modal').data('type'), base: $('#profile_modal').data('base'), count: $('#profile_modal').data('count') })
       }
+
+      //
       else {
         var index = $('#version').text().indexOf(' ')
         progress(a.id, { ver: $('#version').text().slice(index + 1, -1), type: $('#version').text().slice(0, index), latest: $('#latest_check').prop('checked') }, { data: $('#profile_modal').data('zip'), type: $('#profile_modal').data('type'), base: $('#profile_modal').data('base'), count: $('#profile_modal').data('count') })
       }
     }
     else {
+
+      //
       if (fs.existsSync($('#jar_input').val())) {
         $('#profile_modal').modal('hide')
         profile_ready(a.id, true)
         //reload_profile();
         create_detail(a.id)
       }
+
+      //
       else {
         var index = $('#version').text().indexOf(' ')
         progress(a.id, { ver: $('#version').text().slice(index + 1, -1), type: $('#version').text().slice(0, index), latest: $('#latest_check').prop('checked') })
@@ -340,10 +454,14 @@ $('#profile_save').click(() => {
   else {
     profiles[a.id] = a
     fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
+
+    //
     if ($('#change_check').prop('checked')) {
       var index = $('#version').text().indexOf(' ')
       progress(a.id, { ver: $('#version').text().slice(index + 1, -1), type: $('#version').text().slice(0, index), latest: $('#latest_check').prop('checked') })
     }
+
+    //
     else {
       $('#profile_modal').modal('hide')
       profile_ready(a.id, true)
@@ -351,20 +469,36 @@ $('#profile_save').click(() => {
     }
   }
 })
+
+
+
+//
 $('#max_memory_slider').on('input', function() {
   if (parseInt($('#min_memory_slider').val()) > parseInt($(this).val())) $(this).val($('#min_memory_slider').val())
   $('#max_memory_text').val($(this).val() * 128 + 'MB')
 })
+
+
+
+//
 $('#min_memory_slider').on('input', function(e) {
   if (parseInt($('#max_memory_slider').val()) < parseInt($(this).val())) $(this).val($('#max_memory_slider').val())
   $('#min_memory_text').val($(this).val() * 128 + 'MB')
 })
+
+
+
+//
 $('#name, #folder_input, #jar_input').keyup(function() { $(this).parent().removeClass('has-error') })
 $('.dropdown-menu li a').click(function() {
   $(this).parents('.dropdown').find('.dropdown-toggle').html($(this).text() + ' <span class="caret"></span>')
   $(this).parents('.dropdown').find('input[name="dropdown-value"]').val($(this).attr('data-value'))
   $('#version').removeClass('btn-danger')
 })
+
+
+
+//
 $('#jar_select').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -375,6 +509,10 @@ $('#jar_select').click(() => {
     $('#jar_input').val(files[0]).parent().removeClass('has-error')
   })
 })
+
+
+
+//
 $('#folder_select').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -385,7 +523,14 @@ $('#folder_select').click(() => {
     if ($('#name').val() === '') $('#name').val(path.basename(directories[0])).parent().removeClass('has-error')
   })
 })
+
+
+
+//
 $('#change_check')
+
+
+
 //properties画面
 $('#manage_modal').on('show.bs.modal', event => {
   const a = profiles[$(event.relatedTarget).parent().data('id')]
@@ -422,14 +567,26 @@ $('#manage_modal').on('show.bs.modal', event => {
     })
   })
 })
+
+
+
+//
 $('.properties_toggle').on('switchChange.bootstrapSwitch', function(event, state) {
   properties[$(this).attr('id')] = state
   ipc.send('save_properties', { location: properties_location, data: properties })
 })
+
+
+
+//
 $('.properties_text').change(function(event) {
   properties[$(this).attr('id')] = $(this).val()
   ipc.send('save_properties', { location: properties_location, data: properties })
 })
+
+
+
+//
 $('.properties_drop').click(function(event) {
   const a = $(this).parent().find('.dropdown-toggle')
   const text = a.text().trim()
@@ -440,6 +597,10 @@ $('.properties_drop').click(function(event) {
   }
   ipc.send('save_properties', { location: properties_location, data: properties })
 })
+
+
+
+//
 let properties, properties_location
 ipc.on('load_properties', (e, data) => {
   if (data === undefined || data === null) return
@@ -467,6 +628,10 @@ ipc.on('load_properties', (e, data) => {
   }
   resize()
 })
+
+
+
+//
 ipc.on('load_logs', (e, data) => {
   let html = ''
   if (data === undefined || data === null) {
@@ -494,6 +659,10 @@ ipc.on('load_logs', (e, data) => {
     }
   })
 })
+
+
+
+//
 ipc.on('load_backup', (e, data) => {
   let html = ''
   if (data === undefined || data === null) {
@@ -541,7 +710,14 @@ ipc.on('load_backup', (e, data) => {
     })
   })
 })
+
+
+
+//
 ipc.on('restore_success', () => { dialog.showMessageBox(browserWindow.getFocusedWindow(), { title: '復元完了', type: 'info', message: '復元が完了しました', detail: '起動ボタンでサーバーを立ち上げてください', buttons: ['OK'] }) })
+
+
+
 //設定画面
 $('#settings_modal').on('show.bs.modal', () => {
   for (const name in settings) {
@@ -549,6 +725,10 @@ $('#settings_modal').on('show.bs.modal', () => {
     else $('#' + name).val(settings[name])
   }
 })
+
+
+
+//
 $('#settings_save').click(() => {
   if ($('#backup_dir_bool').prop('checked') && !fs.existsSync($('#backup_dir').val())) {
     $('#backup_dir').parent().addClass('has-error')
@@ -572,6 +752,10 @@ $('#settings_save').click(() => {
     }
   })
 })
+
+
+
+//
 $('#backup_select').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -581,10 +765,18 @@ $('#backup_select').click(() => {
     $('#backup_dir').val(directories[0]).parent().removeClass('has-error')
   })
 })
+
+
+
+//
 ipc.on('backup_move_finish', () => {
   $('#loading').hide()
   dialog.showMessageBox(browserWindow.getFocusedWindow(), { title: '移動完了', type: 'info', message: 'バックアップデータの移動が完了しました', detail: '問題があった場合は報告してください。', buttons: ['OK'] })
 })
+
+
+
+//
 /*$('#remove_profile').click(function(){
     var id = $('#remove_id').val();
     delete profiles[id];
@@ -609,6 +801,10 @@ $('#remove_file').click(function(){
     //reload_profile();
     $('#remove_modal').modal('hide');
 });*/
+
+
+
+//
 $('#eula_modal').on('show.bs.modal', e => {
   $.ajax({
     url: 'https://account.mojang.com/documents/minecraft_eula',
@@ -622,7 +818,13 @@ $('#eula_modal').on('show.bs.modal', e => {
   })
   //$('#eula_iframe')[0].contentDocument.location.replace('https://account.mojang.com/documents/minecraft_eula');
 })
+
+
+
+//
 $('#eula_modal').on('hide.bs.modal', e => { $('#eula_agree').off('click') })
+
+
 
 //データ選択
 $('.drag_area').bind('drop', e => {
@@ -639,6 +841,10 @@ $('.drag_area').bind('drop', e => {
 }
 ).bind('dragenter', () => { return false }
 ).bind('dragover', () => { return false })
+
+
+
+//
 $('.drag_click_folder').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -648,6 +854,10 @@ $('.drag_click_folder').click(() => {
     load_data(directories[0])
   })
 })
+
+
+
+//
 $('.drag_click_file').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -658,6 +868,8 @@ $('.drag_click_file').click(() => {
     else load_data(path.dirname(files[0]))
   })
 })
+
+
 
 //不具合報告
 $('#report_type_select').click(event => {
@@ -677,6 +889,10 @@ $('#report_type_select').click(event => {
     $('#report_text').css('height', '70%')
   }
 })
+
+
+
+//
 $('#report_send').click(() => {
   let data = {}
   if ($('#report_type').text().trim() === '不具合報告(ポート開放)') data = { type: 'port_report', data: $('#port_text').text(), text: $('#report_text').val(), ver: app.getVersion(), os: process.platform }
@@ -695,6 +911,10 @@ $('#report_send').click(() => {
     },
   })
 })
+
+
+
+//
 $('.reload').click(() => {
   dialog.showMessageBox(browserWindow.getFocusedWindow(), {
     title: 'プログラム再起動', type: 'warning', message: 'ソフトを再起動します', detail: 'サーバーは強制終了されます\n(動作がおかしくなったときにのみ使用してください)', buttons: ['再起動', 'キャンセル'], cancelId: -1, defaultId: 1 },
@@ -703,8 +923,14 @@ $('.reload').click(() => {
     location.reload()
   })
 })
+
+
+
+//
 $(document).on('click', '.popover', evt => { evt.stopPropagation() })
 $(document).on('click', 'html', () => { $('[data-toggle=popover]').popover('hide') })
+
+
 
 //メニュー
 function menu() {
@@ -729,6 +955,8 @@ function menu() {
     $('#menu').data('show', true)
   }
 }
+
+
 
 //サーバー起動
 function start_server(id) {
@@ -789,6 +1017,8 @@ function start_server(id) {
   }
 }
 
+
+
 //サーバー停止
 function stop_server(id) {
   $('#' + id + '_cmd_input, #' + id + '_cmd_button, #' + id + '_stop_button, #' + id + '_restart_button').prop('disabled', true)
@@ -797,11 +1027,15 @@ function stop_server(id) {
   send_command(id, 'stop')
 }
 
+
+
 //サーバー再起動
 function restart_server(id) {
   stop_server(id)
   restart_flag[id] = true
 }
+
+
 
 //サーバーKill
 function kill_server(id) {
@@ -816,6 +1050,8 @@ function kill_server(id) {
   })
 }
 
+
+
 //コマンド送信
 function send_command(id, ex) {
   let cmd = $('#' + id + '_cmd_input').val()
@@ -827,6 +1063,8 @@ function send_command(id, ex) {
   save_indices(id, cmd)
   $('#' + id + '_cmd_input').val('')
 }
+
+
 
 //行に分割
 function line_check(id, text) {
@@ -842,6 +1080,8 @@ function line_check(id, text) {
   logs[id].draw(false).page('last')
   $('#' + id + '_log').parent().scrollTop(999999999999999)
 }
+
+
 
 //ログの処理
 function add_line(id, text) {
@@ -930,6 +1170,8 @@ function add_line(id, text) {
   }
 }
 
+
+
 //ポート開放
 function port_open(id, port_num) {
   upnp.findGateway((gateway_error, info, gateway_ip) => {
@@ -981,6 +1223,8 @@ function port_open(id, port_num) {
   port[id].port = port_num
 }
 
+
+
 //解放チェック
 function port_check(id, port_num) {
   const after = function(bool) {
@@ -1017,6 +1261,8 @@ function port_check(id, port_num) {
   })
 }
 
+
+
 //稼働時間管理
 function timer(id) {
   let hms = ''
@@ -1037,6 +1283,8 @@ function timer(id) {
   }
 }
 
+
+
 //無人時間管理
 function nopeople_timer(id) {
   let hms = ''
@@ -1052,6 +1300,8 @@ function nopeople_timer(id) {
     hms = '00:00:' + padZero(s)
   $('#' + id + '_nopeople').text('無人時間：' + hms)
 }
+
+
 
 //フォルダ読み込み
 function load_data(directory) {
@@ -1091,6 +1341,8 @@ function load_data(directory) {
   })
 }
 
+
+
 //Zip読み込み
 function load_zip(base_file) {
   $('#profile_modal').data('zip', base_file)
@@ -1117,6 +1369,8 @@ function load_zip(base_file) {
   })
 }
 
+
+
 //jarファイル検索
 function jar_check(data) {
   const l = $.grep(data, (elem, index) => { return path.extname(elem) === '.jar' })
@@ -1128,12 +1382,16 @@ function jar_check(data) {
   }
 }
 
+
+//
 /*function reload_profile(){
     $('#status').empty();
     $.each(profiles, function(i, e){
         $('#status').append('<tr data-toggle="collapse" data-target="#' + e.id + '_status" class="danger clickable ' + e.id + '_status_color"><td>' + e.name + '</td><td id="' + e.id + '_elapsed_list_text">--:--:--</td></tr><tr class="danger ' + e.id + '_status_color"><td colspan="3" style="padding: 0 8px; border:0;"><div id="' + e.id + '_status" class="collapse"><div style="margin: 8px;"><p id="' + e.id + '_status_list_text">ステータス：停止</p><div id="' + e.id + '_status_players"></div></div></div></td></tr>');
     });
 }*/
+
+
 
 //タブのデータ準備
 function profile_ready(id, first) {
@@ -1152,6 +1410,8 @@ function profile_ready(id, first) {
   })
   port[id] = []
 }
+
+
 
 //タブの内容生成
 function create_detail(extra) {
@@ -1221,6 +1481,8 @@ function create_detail(extra) {
   }
 }
 
+
+
 //読み込み終了
 function load_end(e) {
   if (e) { //初期起動&プロファイルなし
@@ -1233,6 +1495,8 @@ function load_end(e) {
     resize()
   }
 }
+
+
 
 //プロファイル削除
 function remove_profile(id) {
@@ -1253,6 +1517,8 @@ function remove_profile(id) {
   )
 }
 
+
+
 //進行状況(親)
 function progress(id, jar, zip) {
   profile_close = true
@@ -1266,11 +1532,15 @@ function progress(id, jar, zip) {
   else if (jar !== undefined && zip !== undefined) start_unzip(id, zip.data, zip.base, zip.count, zip.type, 0.3, jar)
 }
 
+
+
 //パーセント管理
 function percent(i, text) {
   $('#progress').width(i + '%')
   $('#progress_text').text(text)
 }
+
+
 
 //解凍処理(GUI)
 function start_unzip(id, file, base, data_count, type, per, extra) {
@@ -1288,6 +1558,8 @@ function start_unzip(id, file, base, data_count, type, per, extra) {
     return
   })
 }
+
+
 
 //ダウンロード処理
 function start_download(id, ver, mode, latest, per) {
@@ -1364,6 +1636,8 @@ function start_download(id, ver, mode, latest, per) {
   }
 }
 
+
+
 //終了処理
 function end_progress(id, jar) {
   if (jar !== undefined) profiles[id].jar = jar
@@ -1378,6 +1652,8 @@ function end_progress(id, jar) {
   profile_ready(id, true)
 }
 
+
+
 //EULA処理
 function eula_agree(id) {
   fs.readFile(path.join(profiles[id].folder, 'eula.txt'), 'utf8', (e, t) => {
@@ -1386,6 +1662,8 @@ function eula_agree(id) {
     start_server(id)
   })
 }
+
+
 
 //予測変換保存
 function save_indices(id, text) {
@@ -1396,11 +1674,15 @@ function save_indices(id, text) {
   fs.writeFile(path.join(profiles[id].folder, 'indices.ams'), JSON.stringify(indices[id]), error => { /* handle error */ })
 }
 
+
+
 //0の挿入
 function padZero(v) {
   if (v < 10) return '0' + v
   else return v
 }
+
+
 
 //ソート用
 function hikaku(v1, v2) {
@@ -1410,16 +1692,22 @@ function hikaku(v1, v2) {
   else return -1
 }
 
+
+
 //バックアップ開始
 function backup(id) {
   backup_flag[id] = true
   send_command(id, 'save-all')
 }
 
+
+
 //HTMLエスケープ
 function tohtml(t) {
   return t.replace(/\\/g, '\\\\')
 }
+
+
 
 //UUID作成
 function uuid() {
@@ -1427,6 +1715,9 @@ function uuid() {
   return  S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4()
 }
 
+
+
+//
 function getAvatarURL(name, callback) {
   request({
     url: 'https://api.mojang.com/users/profiles/minecraft/' + name,
@@ -1436,6 +1727,8 @@ function getAvatarURL(name, callback) {
     callback('https://crafatar.com/avatars/' + body.id)
   })
 }
+
+
 
 //現在時刻
 function time(extra) {
@@ -1453,6 +1746,8 @@ function time(extra) {
     return Hours + ':' + Minutes + ':' + Seconds
 }
 
+
+
 //エクスプローラーで開く
 function open_directry(d) {
   if (process.platform === 'win32') exec('explorer', [d])
@@ -1461,6 +1756,8 @@ function open_directry(d) {
   //p.stderr.on('data', function(data){ console.log(data.toString()) });
   //p.on('exit', function (code){ console.log(code.toString()) });
 }
+
+
 
 //バージョン比較
 function versionCompare(v1, v2, options) {
@@ -1497,6 +1794,9 @@ function versionCompare(v1, v2, options) {
   return 0
 }
 
+
+
+//
 function round(sec) {
   if (typeof sec !== 'number') return '残り時間計測中'
   const ms = sec * 1000
