@@ -53,13 +53,6 @@
       }
     ],
     "no-implicit-coercion": "error",
-    "no-multiple-empty-lines": [
-      "error",
-      {
-        "max": 1,
-        "maxEOF": 1
-      }
-    ],
     "no-spaced-func": "error",
     "no-var": "error",
     "prefer-arrow-callback": "error",
