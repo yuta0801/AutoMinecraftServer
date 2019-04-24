@@ -2,7 +2,7 @@
 
 Minecraftのサーバーを自動化するためのソフトです。
 
-[![MIT License](https://img.shields.io/github/license/yuta0801/AutoMinecraftServer.svg?style=flat)](https://github.com/nyanko-kota/mailcatcher/blob/master/LICENSE.txt)
+[![MIT License](https://img.shields.io/github/license/yuta0801/AutoMinecraftServer.svg?style=flat)](https://github.com/yuta0801/AutoMinecraftServer/blob/master/LICENSE)
 
 ## 使い方
 工事中
