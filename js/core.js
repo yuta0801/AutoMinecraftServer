@@ -74,12 +74,12 @@ let base_dir = ''
 
 
 
-//
+// リサイズイベントを実行させる
 function resize() { $(window).trigger('resize') }
 
 
 
-//
+// 選択されたバージョンを描画する（HTML側から実行）
 function ver(e) {
   $('#version').html($(e).text() + ' <span class="caret"></span>')
 }
@@ -92,7 +92,7 @@ $(document).on('contextmenu', e => {
   const b = text !== ''? true : false
   const text_ = text.length > 15? '...' : ''
 
-  //
+  // 入力欄への右クリックメニューを表示する
   if ($(e.target).get(0).tagName === 'INPUT') {
     if ($(e.target).prop('disabled') === true) return
     remote.Menu.buildFromTemplate([
@@ -110,7 +110,7 @@ $(document).on('contextmenu', e => {
     ]).popup(remote.getCurrentWindow())
   }
 
-  //
+  // プレイヤー要素への右クリックメニューを表示する
   else if ($(e.target).parent().get(0).className === 'player') {
     const name = $(e.target).text()
     const id = $(e.target).attr('class').slice(0, $(e.target).attr('class').indexOf('_'))
@@ -128,7 +128,7 @@ $(document).on('contextmenu', e => {
     ]).popup(remote.getCurrentWindow())
   }
 
-  //
+  // 文字選択時の右クリックメニューを表示する
   else if (b)
     remote.Menu.buildFromTemplate([
       {label: 'コピー', accelerator: 'CmdOrCtrl+C', role: 'copy', visible: b},
@@ -222,7 +222,7 @@ fs.readFile(path.join(base_dir, 'profile.ams'), 'utf8', (e, t) => {
 
 
 
-//
+// サーバー設定(プロフィール)を読み込む
 fs.readFile(path.join(base_dir, 'settings.ams'), 'utf8', (e, t) => {
   if (!e) {
     const s = JSON.parse(t)
@@ -249,7 +249,7 @@ ipc.on('update', (e, a) => {
 $('#profile_modal').on('show.bs.modal', function(event) {
   let a = profiles[$(event.relatedTarget).parent().data('id')]
 
-  //
+  // プロフィールが無かった場合の初期化
   if (a === undefined) {
     a = { id: uuid(), name: '', folder: '', jar: '', max_memory: '1024', min_memory: '512', upnp: true, backup: true,
       backup_minute: '10', backup_count: '5' }
@@ -265,14 +265,14 @@ $('#profile_modal').on('show.bs.modal', function(event) {
     }
   }
 
-  //
+  // プロフィール編集時の処理
   else {
     $('#change_check').parent().parent().show()
     $('#version').parent().parent().hide()
     $('#folder_input, #jar_input').attr('placeholder', '')
   }
 
-  //
+  // データの表示
   $('#version').removeClass('btn-danger')
   $('.has-error').removeClass('has-error')
   $('#id').val(a.id)
@@ -289,7 +289,7 @@ $('#profile_modal').on('show.bs.modal', function(event) {
 
 
 
-//
+// プロフィール編集モーダルが閉じられたときの処理
 $('#profile_modal').on('hide.bs.modal', function(e) {
   if (profile_close)
     e.preventDefault()
@@ -315,7 +315,7 @@ $('#profile_modal').on('hide.bs.modal', function(e) {
 
 
 
-//
+// プロフィールモーダルの保存ボタンが閉じられたときの処理
 $('#profile_save').click(() => {
   let error = false
   const p = profiles[$('#id').val()] !== undefined
@@ -352,7 +352,7 @@ $('#profile_save').click(() => {
       error = true
     }
 
-    //
+    // バージョン必須時のバージョンチェック
     if ($('#version').text() === '選択' && $('#version').parent().parent().css('display') !== 'none') {
       $('#version').addClass('btn-danger')
       error = true
@@ -394,7 +394,7 @@ $('#profile_save').click(() => {
   a.backup_minute = $('#backup_minute').val()
   a.backup_count = $('#backup_count').val()
 
-  //
+  // プロフィールが存在しないときの初期化処理
   if (!p) {
 
     //フォルダ自動指定
@@ -405,21 +405,21 @@ $('#profile_save').click(() => {
       $('#folder_input').val(a.folder)
     }
 
-    //
+    // プロフィールの更新、保存
     profiles[a.id] = a
     fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
 
-    //
+    // zipファイルが選択されているときの処理
     if ($('#profile_modal').data('zip_bool')) {
 
-      //
+      // jarファイルが選択されていないときの処理
       if ($('#jar_input').val() !== '') {
         a.jar = a.jar.replace(/^\.\./, $('#folder_input').val())
         $('#jar_input').val(a.jar)
         progress(a.id, undefined, { data: $('#profile_modal').data('zip'), type: $('#profile_modal').data('type'), base: $('#profile_modal').data('base'), count: $('#profile_modal').data('count') })
       }
 
-      //
+      // jarファイルが選択されたときの処理
       else if ($('#jar_choice').text().trim() !== '必ず選択してください') {
         a.jar = path.join($('#folder_input').val(), $('#jar_choice').text().trim())
         $('#jar_input_div').show()
@@ -428,7 +428,7 @@ $('#profile_save').click(() => {
         progress(a.id, undefined, { data: $('#profile_modal').data('zip'), type: $('#profile_modal').data('type'), base: $('#profile_modal').data('base'), count: $('#profile_modal').data('count') })
       }
 
-      //
+      // バージョンが指定されたときの処理
       else {
         var index = $('#version').text().indexOf(' ')
         progress(a.id, { ver: $('#version').text().slice(index + 1, -1), type: $('#version').text().slice(0, index), latest: $('#latest_check').prop('checked') }, { data: $('#profile_modal').data('zip'), type: $('#profile_modal').data('type'), base: $('#profile_modal').data('base'), count: $('#profile_modal').data('count') })
@@ -436,7 +436,7 @@ $('#profile_save').click(() => {
     }
     else {
 
-      //
+      // jarファイルが選択されている場合の処理
       if (fs.existsSync($('#jar_input').val())) {
         $('#profile_modal').modal('hide')
         profile_ready(a.id, true)
@@ -444,7 +444,7 @@ $('#profile_save').click(() => {
         create_detail(a.id)
       }
 
-      //
+      // jarファイルをダウンロードする処理
       else {
         var index = $('#version').text().indexOf(' ')
         progress(a.id, { ver: $('#version').text().slice(index + 1, -1), type: $('#version').text().slice(0, index), latest: $('#latest_check').prop('checked') })
@@ -455,13 +455,13 @@ $('#profile_save').click(() => {
     profiles[a.id] = a
     fs.writeFile(path.join(base_dir, 'profile.ams'), JSON.stringify(profiles), error => { /* handle error */ })
 
-    //
+    // バージョン変更処理
     if ($('#change_check').prop('checked')) {
       var index = $('#version').text().indexOf(' ')
       progress(a.id, { ver: $('#version').text().slice(index + 1, -1), type: $('#version').text().slice(0, index), latest: $('#latest_check').prop('checked') })
     }
 
-    //
+    // プロフィール更新
     else {
       $('#profile_modal').modal('hide')
       profile_ready(a.id, true)
@@ -472,7 +472,7 @@ $('#profile_save').click(() => {
 
 
 
-//
+// メモリ更新(max)
 $('#max_memory_slider').on('input', function() {
   if (parseInt($('#min_memory_slider').val()) > parseInt($(this).val())) $(this).val($('#min_memory_slider').val())
   $('#max_memory_text').val($(this).val() * 128 + 'MB')
@@ -480,7 +480,7 @@ $('#max_memory_slider').on('input', function() {
 
 
 
-//
+// メモリ更新(min)
 $('#min_memory_slider').on('input', function(e) {
   if (parseInt($('#max_memory_slider').val()) < parseInt($(this).val())) $(this).val($('#max_memory_slider').val())
   $('#min_memory_text').val($(this).val() * 128 + 'MB')
@@ -488,8 +488,10 @@ $('#min_memory_slider').on('input', function(e) {
 
 
 
-//
+// 値更新時にエラー表示を消す
 $('#name, #folder_input, #jar_input').keyup(function() { $(this).parent().removeClass('has-error') })
+
+// ドロップダウンメニューが選択されたときの更新
 $('.dropdown-menu li a').click(function() {
   $(this).parents('.dropdown').find('.dropdown-toggle').html($(this).text() + ' <span class="caret"></span>')
   $(this).parents('.dropdown').find('input[name="dropdown-value"]').val($(this).attr('data-value'))
@@ -498,7 +500,7 @@ $('.dropdown-menu li a').click(function() {
 
 
 
-//
+// jarファイル選択ダイアログ
 $('#jar_select').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -512,7 +514,7 @@ $('#jar_select').click(() => {
 
 
 
-//
+// フォルダ選択ダイアログ
 $('#folder_select').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -526,7 +528,7 @@ $('#folder_select').click(() => {
 
 
 
-//
+// 何かの残骸？
 $('#change_check')
 
 
@@ -570,7 +572,7 @@ $('#manage_modal').on('show.bs.modal', event => {
 
 
 
-//
+// サーバー設定更新時のファイル更新処理(toggle)
 $('.properties_toggle').on('switchChange.bootstrapSwitch', function(event, state) {
   properties[$(this).attr('id')] = state
   ipc.send('save_properties', { location: properties_location, data: properties })
@@ -578,7 +580,7 @@ $('.properties_toggle').on('switchChange.bootstrapSwitch', function(event, state
 
 
 
-//
+// サーバー設定更新時のファイル更新処理(text)
 $('.properties_text').change(function(event) {
   properties[$(this).attr('id')] = $(this).val()
   ipc.send('save_properties', { location: properties_location, data: properties })
@@ -586,7 +588,7 @@ $('.properties_text').change(function(event) {
 
 
 
-//
+// サーバー設定更新時のファイル更新処理(dropdown)
 $('.properties_drop').click(function(event) {
   const a = $(this).parent().find('.dropdown-toggle')
   const text = a.text().trim()
@@ -600,7 +602,7 @@ $('.properties_drop').click(function(event) {
 
 
 
-//
+// サーバー設定の表示
 let properties, properties_location
 ipc.on('load_properties', (e, data) => {
   if (data === undefined || data === null) return
@@ -631,7 +633,7 @@ ipc.on('load_properties', (e, data) => {
 
 
 
-//
+// ログの表示
 ipc.on('load_logs', (e, data) => {
   let html = ''
   if (data === undefined || data === null) {
@@ -662,7 +664,7 @@ ipc.on('load_logs', (e, data) => {
 
 
 
-//
+// バックアップの表示
 ipc.on('load_backup', (e, data) => {
   let html = ''
   if (data === undefined || data === null) {
@@ -713,7 +715,7 @@ ipc.on('load_backup', (e, data) => {
 
 
 
-//
+// バックアップからの復元が完了したときのダイアログ
 ipc.on('restore_success', () => { dialog.showMessageBox(browserWindow.getFocusedWindow(), { title: '復元完了', type: 'info', message: '復元が完了しました', detail: '起動ボタンでサーバーを立ち上げてください', buttons: ['OK'] }) })
 
 
@@ -728,7 +730,7 @@ $('#settings_modal').on('show.bs.modal', () => {
 
 
 
-//
+// ソフト設定更新時の処理
 $('#settings_save').click(() => {
   if ($('#backup_dir_bool').prop('checked') && !fs.existsSync($('#backup_dir').val())) {
     $('#backup_dir').parent().addClass('has-error')
@@ -755,7 +757,7 @@ $('#settings_save').click(() => {
 
 
 
-//
+// バックアップ選択ダイアログ
 $('#backup_select').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -768,7 +770,7 @@ $('#backup_select').click(() => {
 
 
 
-//
+// バックアップ移動完了ダイアログ
 ipc.on('backup_move_finish', () => {
   $('#loading').hide()
   dialog.showMessageBox(browserWindow.getFocusedWindow(), { title: '移動完了', type: 'info', message: 'バックアップデータの移動が完了しました', detail: '問題があった場合は報告してください。', buttons: ['OK'] })
@@ -776,7 +778,7 @@ ipc.on('backup_move_finish', () => {
 
 
 
-//
+// プロフィール削除処理
 /*$('#remove_profile').click(function(){
     var id = $('#remove_id').val();
     delete profiles[id];
@@ -804,7 +806,7 @@ $('#remove_file').click(function(){
 
 
 
-//
+// eulaの取得/表示
 $('#eula_modal').on('show.bs.modal', e => {
   $.ajax({
     url: 'https://account.mojang.com/documents/minecraft_eula',
@@ -821,7 +823,7 @@ $('#eula_modal').on('show.bs.modal', e => {
 
 
 
-//
+// eulaモーダルが閉じられた後の処理
 $('#eula_modal').on('hide.bs.modal', e => { $('#eula_agree').off('click') })
 
 
@@ -844,7 +846,7 @@ $('.drag_area').bind('drop', e => {
 
 
 
-//
+// フォルダ選択ダイアログ
 $('.drag_click_folder').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -857,7 +859,7 @@ $('.drag_click_folder').click(() => {
 
 
 
-//
+// ファイル選択ダイアログ
 $('.drag_click_file').click(() => {
   const focusedWindow = browserWindow.getFocusedWindow()
   dialog.showOpenDialog(focusedWindow, {
@@ -892,7 +894,7 @@ $('#report_type_select').click(event => {
 
 
 
-//
+// レポート送信
 $('#report_send').click(() => {
   let data = {}
   if ($('#report_type').text().trim() === '不具合報告(ポート開放)') data = { type: 'port_report', data: $('#port_text').text(), text: $('#report_text').val(), ver: app.getVersion(), os: process.platform }
@@ -914,7 +916,7 @@ $('#report_send').click(() => {
 
 
 
-//
+// 再起動ダイアログ表示
 $('.reload').click(() => {
   dialog.showMessageBox(browserWindow.getFocusedWindow(), {
     title: 'プログラム再起動', type: 'warning', message: 'ソフトを再起動します', detail: 'サーバーは強制終了されます\n(動作がおかしくなったときにのみ使用してください)', buttons: ['再起動', 'キャンセル'], cancelId: -1, defaultId: 1 },
@@ -926,7 +928,7 @@ $('.reload').click(() => {
 
 
 
-//
+// ポップアップのクリックイベントに関する処理
 $(document).on('click', '.popover', evt => { evt.stopPropagation() })
 $(document).on('click', 'html', () => { $('[data-toggle=popover]').popover('hide') })
 
@@ -1383,7 +1385,7 @@ function jar_check(data) {
 }
 
 
-//
+// プロフィールの再読込処理
 /*function reload_profile(){
     $('#status').empty();
     $.each(profiles, function(i, e){
@@ -1717,7 +1719,7 @@ function uuid() {
 
 
 
-//
+// アバター画像URLを取得する関数
 function getAvatarURL(name, callback) {
   request({
     url: 'https://api.mojang.com/users/profiles/minecraft/' + name,
@@ -1796,7 +1798,7 @@ function versionCompare(v1, v2, options) {
 
 
 
-//
+// 残り時間を丸める関数
 function round(sec) {
   if (typeof sec !== 'number') return '残り時間計測中'
   const ms = sec * 1000
