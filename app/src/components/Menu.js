@@ -1,10 +1,16 @@
 import React from 'react'
+const { useState } = React
 
 export default function Menu() {
+  const [isOpen, setMenu] = useState(false)
+
   return (
     <div>
-      <div id="menu_button" onClick={() => {/* menu() */}}><a id="menu_title">MENU</a><div id="menu_icon"></div></div>
-      <div id="menu" data-show="false" style={{ height: '100%' }}>
+      <div id="menu_button" className={ isOpen && 'opened' } onClick={() => setMenu(!isOpen)}>
+        <a id="menu_title">MENU</a>
+        <div id="menu_icon"></div>
+      </div>
+      { isOpen && <div id="menu" data-show="false" style={{ height: '100%' }}>
         <div className="col-xs-6 s-pad" style={{ height: '100%' }}>
           <h2>最新情報</h2>
           <div className="info" style={{ whiteSpace: 'nowrap', overflow: 'auto', height: '60%', minHeight: '240px' }}>読み込み中...</div>
@@ -28,7 +34,7 @@ export default function Menu() {
           <button className="btn btn-info btn-block" onClick={() => {/* window.open('http://xperd.net/auto-minecraft-server/') */}}>公式サイトへ</button>
           <button className="reload btn btn-danger btn-block">リフレッシュ</button>
         </div>
-      </div>
+      </div> }
     </div>
   )
 }
