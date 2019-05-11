@@ -9,7 +9,7 @@ export default function New() {
         <p className="text-center">使用するフォルダ/Zipファイルをドロップ</p>
         <p className="text-center">または</p>
         <div className="center-block">
-          <input type="file" multiple="multiple" style={{ display: 'none' }} />
+          <input type="file" multiple="multiple" />
           <button className="drag_click_file btn btn-primary btn-block">ファイルを選択</button>
           <button className="drag_click_folder btn btn-primary btn-block">フォルダを選択</button>
         </div>

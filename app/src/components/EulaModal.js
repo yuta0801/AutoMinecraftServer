@@ -3,7 +3,7 @@ import React from 'react'
 export default function EulaModal() {
   return (
     <div id="eula_modal" className="modal">
-      <div className="modal-dialog" style={{ width: '80%' }}>
+      <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
             <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -12,7 +12,7 @@ export default function EulaModal() {
           <div className="modal-body">
             MinecraftのEULAに同意しないとサーバーは立てられません。以下の内容。
                   <div id="eula_div"></div>
-            {/* <iframe id="eula_iframe" style={{ width: '100%', height: '400px' }}></iframe> */}
+            {/* <iframe id="eula_iframe"></iframe> */}
           </div>
           <div className="modal-footer">
             <button id="eula_agree" type="button" className="btn btn-primary">同意する</button>

@@ -13,7 +13,7 @@ import './App.css'
 export default function App() {
   return (
     <div className="App">
-      {/* <div style={{ webkitAppRegion: 'drag', height: '20px', width: '100%' }}></div> */}
+      {/* <div></div> */}
       <Main />
       <Menu />
       <ProfileModal />
@@ -22,7 +22,7 @@ export default function App() {
       <ReportModal />
       <PortModal />
       <SettingsModal />
-      <button id="copy_player" style={{ display: 'none' }}></button>
+      <button id="copy_player"></button>
       <div id="dpi"></div>
       <Loading />
     </div>

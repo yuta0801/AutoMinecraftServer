@@ -4,8 +4,8 @@ import News from './News'
 
 export default function Main() {
   return (
-    <div id="main" style={{ height: 'calc(100%-20px)', padding: '3px 0' }}>
-      <div id="main_left" className="col-xs-4 s-pad" style={{ height: '100%', overflowY: 'auto', padding: '0px 5px 5px' }}>
+    <div id="main">
+      <div id="main_left" className="col-xs-4 s-pad">
         {/* <h2>ステータス</h2>
               <table className="table table-hover">
                   <thead><tr><th data-column-id="profile" data-identifier="true">プロファイル名</th><th data-column-id="time">継続時間</th></tr></thead>
@@ -15,11 +15,11 @@ export default function Main() {
         <News />
         <New />
       </div>
-      <div id="main_right" className="col-xs-8 s-pad" style={{ height: '100%' }}>
-        <ul id="detail_tab" className="nav nav-tabs" onClick={() => {/* setTimeout(resize, 1) */}} style={{ whiteSpace: 'nowrap' }}>
+      <div id="main_right" className="col-xs-8 s-pad">
+        <ul id="detail_tab" className="nav nav-tabs" onClick={() => {/* setTimeout(resize, 1) */}}>
         </ul>
         <div id="detail_content" className="tab-content">
-          <div style={{ position: 'absolute', zIndex: '-10', top: '30px', width: '96%', margin: '1%' }}>
+          <div>
             <h1>！サーバーがありません！</h1>
             <p>サーバーを立てるには...</p>
             <p>1. 「サーバーを新たに作成する」をクリック</p>

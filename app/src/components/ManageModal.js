@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function ManageModal() {
   return (
-    <div id="manage_modal" className="modal modal-content" style={{ height: '90%', width: '90%', top: '5%', left: '5%', minWidth: '750px', minHeight: '200px' }}>
+    <div id="manage_modal" className="modal modal-content">
       <div className="modal-header">
         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 id="manage_title" className="modal-title">サーバー/ログ/コマンド履歴/バックアップの管理</h4>
@@ -14,8 +14,8 @@ export default function ManageModal() {
           <li><a id="command_tab" href="#command_content" data-toggle="tab">コマンド履歴</a></li>
           <li><a id="backup_tab" href="#backup_content" data-toggle="tab">バックアップ復元・削除</a></li>
         </ul>
-        <div className="tab-content" style={{ height: '100%', paddingBottom: '23px' }}>
-          <div className="tab-pane in active" id="properties_content" style={{ height: '100%', overflow: 'scroll' }}>
+        <div className="tab-content">
+          <div className="tab-pane in active" id="properties_content">
             <table className="table table-hover table-condensed manage_table">
               <thead><tr><th data-sortable="false">項目</th><th data-sortable="false">初期値</th><th data-sortable="false">設定</th></tr></thead>
               <tbody>
@@ -84,13 +84,13 @@ export default function ManageModal() {
               </tbody>
             </table>
           </div>
-          <div className="tab-pane in" id="log_content" style={{ height: '100%', overflow: 'scroll' }}>
+          <div className="tab-pane in" id="log_content">
 
           </div>
-          <div className="tab-pane in" id="command_content" style={{ height: '100%', overflow: 'scroll' }}>
+          <div className="tab-pane in" id="command_content">
 
           </div>
-          <div className="tab-pane in" id="backup_content" style={{ height: '100%', overflow: 'scroll' }}>
+          <div className="tab-pane in" id="backup_content">
 
           </div>
         </div>

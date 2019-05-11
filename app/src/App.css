@@ -3,3 +3,238 @@
 @import url('./css/dataTables.bootstrap.min.css');
 @import url('./css/jquery.auto-complete.css');
 @import url('./css/style.css');
+
+/* app */
+
+/* div.App > div:first-child {
+  -webkit-app-region: drag;
+  height: 20px;
+  width: 100%;
+} */
+
+/* main */
+
+#main {
+  height: calc(100%-20px);
+  padding: 3px 0;
+}
+
+#main #main_left {
+  height: 100%;
+  overflow-y: auto;
+  padding: 0px 5px 5px;
+}
+
+#main #main_right {
+  height: 100%;
+}
+
+#main #main_right #detail_tab {
+  white-space: nowrap;
+}
+
+#main #main_right #detail_content div {
+  position: absolute;
+  z-index: -10;
+  top: 30px;
+  width: 96%;
+  margin: 1%;
+}
+
+/* menu */
+
+#menu {
+  height: 100%;
+}
+
+#menu div:first-child {
+  height: 100%;
+}
+
+#menu div:last-child {
+  height: 100%;
+  overflow: auto;
+}
+
+/* new */
+
+#main_left > div:nth-child(2) > div > div > input[type=file],
+#menu > div:nth-child(2) > div > div > div > input[type=file] {
+  display: none;
+}
+
+/* news */
+
+#main_left > div:nth-child(1) > div,
+#menu > div:nth-child(1) > div > div {
+  white-space: nowrap;
+  overflow: auto;
+  height: 60%;
+  min-height: 240px;
+}
+
+/* profile_modal */
+
+#profile_modal {
+  height: 400px;
+  width: 500px;
+  top: 10%;
+  left: 10%;
+  min-height: 350px;
+  min-width: 500px;
+}
+
+#profile_modal #profile_modal_body #zip_explain {
+  display: none;
+}
+
+#profile_modal #profile_modal_body input:first-of-type {
+  display: none;
+}
+
+#profile_modal #profile_modal_body #jar_choice_div {
+  display: none;
+}
+
+#profile_modal #profile_modal_body #jar_choice_div #jar_list {
+  overflow-x: hidden;
+}
+
+#profile_modal #profile_modal_body dl dd:nth-child(13) div div:nth-child(n + 2) {
+  padding: 0 1px;
+}
+
+#profile_modal #profile_modal_body dl dd:nth-child(15) {
+  display: none;
+}
+
+#profile_modal #profile_modal_body dl dd:nth-child(16) {
+  display: none;
+}
+
+#profile_modal #profile_modal_body dl dd:nth-child(16) div {
+  display: inline-block;
+}
+
+#profile_modal #profile_modal #version_body {
+  height: 200px;
+  overflow-x: hidden;
+}
+
+#profile_modal #profile_modal_body > div {
+  display: none;
+  margin-bottom: 4px;
+}
+
+#profile_modal #profile_modal_body #progress {
+  width: 0%;
+}
+
+#profile_modal #profile_modal_body #progress_text {
+  display: none;
+}
+
+/* eula_modal */
+
+#eula_modal .modal-dialog {
+  width: 80%;
+}
+
+/* #eula_modal #eula_iframe {
+  width: 100%;
+  height: 400px;
+} */
+
+/* manage_modal */
+
+#manage_modal {
+  height: 90%;
+  width: 90%;
+  top: 5%;
+  left: 5%;
+  min-width: 750px;
+  min-height: 200px;
+}
+
+#manage_modal .modal-body .tab-content {
+  height: 100%;
+  padding-bottom: 23px;
+}
+
+#manage_modal .modal-body .tab-content #properties_content {
+  height: 100%;
+  overflow: scroll;
+}
+
+#manage_modal .modal-body .tab-content #log_content,
+#manage_modal .modal-body .tab-content #command_content,
+#manage_modal .modal-body .tab-content #backup_content {
+  height: '100%';
+  overflow: 'scroll';
+}
+
+/* report_modal */
+
+#report_modal {
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 80%;
+  min-width: 540px;
+  min-height: 400px;
+}
+
+#report_modal #port_text_h {
+  display: none;
+}
+
+#report_modal #port_text {
+  width: 100%;
+  height: 30%;
+  display: none;
+}
+
+#report_modal #report_text {
+  width: 100%;
+  height: 70%;
+}
+
+/* port_modal */
+
+#port_modal {
+  top: 10%;
+  left: 10%;
+  width: 400px;
+  height: 200px;
+}
+
+#port_modal #manual_port {
+  width: 70px;
+  display: inline-block;
+}
+
+#port_modal input + button, #port_modal button + button {
+  margin-left: 4px;
+}
+
+/* settings_modal */
+
+#settings_modal {
+  height: 350px;
+  width: 500px;
+  top: 10%;
+  left: 10%;
+  min-height: 350px;
+  min-width: 500px;
+}
+
+#settings_modal > .tab-content {
+  height: 100%;
+  padding: 10px;
+}
+
+/* copy_player */
+
+#copy_player {
+  display: none;
+}

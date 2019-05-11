@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function SettingsModal() {
   return (
-    <div id="settings_modal" className="modal modal-content" style={{ height: '350px', width: '500px', top: '10%', left: '10%', minHeight: '350px', minWidth: '500px' }}>
+    <div id="settings_modal" className="modal modal-content">
       <div className="modal-header">
         <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 className="modal-title">設定</h4>
@@ -13,7 +13,7 @@ export default function SettingsModal() {
           <li><a href="#log_settings_content" data-toggle="tab">ログ</a></li>
           <li><a href="#backup_settings_content" data-toggle="tab">バックアップ</a></li>
         </ul>
-        <div className="tab-content" style={{ height: '100%', padding: '10px' }}>
+        <div className="tab-content">
           <div className="tab-pane in active" id="general_settings_content">
             <label><input className="settings_ general" type="checkbox" />----</label>
           </div>

@@ -12,11 +12,11 @@ export default function Menu() {
         <a id="menu_title">MENU</a>
         <div id="menu_icon"></div>
       </div>
-      { isOpen && <div id="menu" data-show="false" style={{ height: '100%' }}>
-        <div className="col-xs-6 s-pad" style={{ height: '100%' }}>
+      { isOpen && <div id="menu" data-show="false">
+        <div className="col-xs-6 s-pad">
           <News />
         </div>
-        <div className="col-xs-6 s-pad" style={{ height: '100%', overflow: 'auto' }}>
+        <div className="col-xs-6 s-pad">
           <New />
         </div>
       </div> }
