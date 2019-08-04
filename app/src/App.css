@@ -6,6 +6,10 @@
 
 /* app */
 
+#root, .App {
+  height: 100%;
+}
+
 /* div.App > div:first-child {
   -webkit-app-region: drag;
   height: 20px;
@@ -58,8 +62,8 @@
 
 /* new */
 
-#main_left > div:nth-child(2) > div > div > input[type=file],
-#menu > div:nth-child(2) > div > div > div > input[type=file] {
+#main_left > div.drag_area > div > input[type=file],
+#menu > div:nth-child(2) > div > div > input[type=file] {
   display: none;
 }
 

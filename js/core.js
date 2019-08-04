@@ -129,7 +129,6 @@ $('[name="toggle"]').bootstrapSwitch();
 //リサイズイベント
 $(window).on('resize', function(){
     var h = ($(window).height() / 1.33)// - 20;
-    $('#main').height(h + 'px');
     $.each(profiles, function(i, e){ $('#' + e.id + '_content').find('.dataTables_scrollBody').height(h - 265 + 'px'); });
     if ($(window).width() > 1380 && $('#menu').data('show')) menu();
 });

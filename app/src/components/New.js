@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function New() {
   return (
-    <div>
+    <>
       <h2>新規作成</h2>
       <button className="btn btn-primary btn-block" data-toggle="modal" data-target="#profile_modal">サーバーを新たに作成する</button>
       <div className="drag_area">
@@ -19,6 +19,6 @@ export default function New() {
       <button className="btn btn-warning btn-block" data-toggle="modal" data-target="#report_modal">不具合/要望</button>
       <button className="btn btn-info btn-block" onClick={() => {/* window.open('http://xperd.net/auto-minecraft-server/') */}}>公式サイトへ</button>
       <button className="reload btn btn-danger btn-block">リフレッシュ</button>
-    </div>
+    </>
   )
 }

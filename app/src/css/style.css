@@ -48,9 +48,14 @@ h2 {
     font-size: 16pt;
 }
 
+html {
+    height: 100%;
+}
+
 body {
     overflow: hidden;
-    zoom: 133.33%;    
+    height: 100%;
+    zoom: 133.33%;
 }
 
 p {
