@@ -23,7 +23,6 @@ export default function App() {
       <PortModal />
       <SettingsModal />
       <button id="copy_player"></button>
-      <div id="dpi"></div>
       <Loading />
     </div>
   )

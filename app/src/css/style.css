@@ -49,7 +49,8 @@ h2 {
 }
 
 body {
-	overflow: hidden;
+    overflow: hidden;
+    zoom: 133.33%;    
 }
 
 p {
@@ -73,15 +74,6 @@ dt, dd {
 
 label {
     margin-left: 5px;
-}
-
-/*dpi測定*/
-#dpi {
-  height: 1in;
-  left: -100%;
-  position: absolute;
-  top: -100%;
-  width: 1in;
 }
 
 /*プレイヤー一覧*/

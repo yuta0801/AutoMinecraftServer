@@ -5,9 +5,6 @@ if (process.platform === 'win32')
     slash = '\\';
 else
     slash = '/';
-var dpi = $('#dpi').outerHeight();
-//$('#dpi').remove();
-$('body').css('zoom', dpi / 72 * 100 + '%');
 
 var load_end_count = 0;
 var profiles = {};
@@ -131,7 +128,7 @@ $.fn.bootstrapSwitch.defaults.handleWidth = 50;
 $('[name="toggle"]').bootstrapSwitch();
 //リサイズイベント
 $(window).on('resize', function(){
-    var h = ($(window).height() / (dpi / 72))// - 20;
+    var h = ($(window).height() / 1.33)// - 20;
     $('#main').height(h + 'px');
     $.each(profiles, function(i, e){ $('#' + e.id + '_content').find('.dataTables_scrollBody').height(h - 265 + 'px'); });
     if ($(window).width() > 1380 && $('#menu').data('show')) menu();
