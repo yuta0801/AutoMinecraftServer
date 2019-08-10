@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function EulaModal() {
+const EulaModal = () => {
   return (
     <div id="eula_modal" className="modal">
       <div className="modal-dialog">
@@ -23,3 +23,5 @@ export default function EulaModal() {
     </div>
   )
 }
+
+export default EulaModal

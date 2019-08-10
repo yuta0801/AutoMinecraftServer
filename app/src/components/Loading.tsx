@@ -1,7 +1,7 @@
 import React from 'react'
 const { useState, useEffect } = React
 
-export default function Loading() {
+const Loading = () => {
   const [isLoading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -18,3 +18,5 @@ export default function Loading() {
     </div>
   )
 }
+
+export default Loading

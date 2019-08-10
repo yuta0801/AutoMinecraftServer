@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ProfileModal() {
+const ProfileModal = () => {
   return (
     <div id="profile_modal" className="modal modal-content">
       <div className="modal-header">
@@ -122,3 +122,5 @@ export default function ProfileModal() {
     </div>
   )
 }
+
+export default ProfileModal

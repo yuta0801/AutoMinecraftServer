@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function SettingsModal() {
+const SettingsModal = () => {
   return (
     <div id="settings_modal" className="modal modal-content">
       <div className="modal-header">
@@ -33,3 +33,5 @@ export default function SettingsModal() {
     </div>
   )
 }
+
+export default SettingsModal

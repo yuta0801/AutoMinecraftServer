@@ -2,7 +2,7 @@ import React from 'react'
 import New from './New'
 import News from './News'
 
-export default function Main() {
+const Main = () => {
   return (
     <div id="main">
       <div id="main_left" className="col-xs-4 s-pad">
@@ -34,3 +34,5 @@ export default function Main() {
     </div>
   )
 }
+
+export default Main

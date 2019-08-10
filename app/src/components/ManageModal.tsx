@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ManageModal() {
+const ManageModal = () => {
   return (
     <div id="manage_modal" className="modal modal-content">
       <div className="modal-header">
@@ -101,3 +101,5 @@ export default function ManageModal() {
     </div>
   )
 }
+
+export default ManageModal

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function ReportModal() {
+const ReportModal = () => {
   return (
     <div id="report_modal" className="modal modal-content">
       <div className="modal-header">
@@ -27,3 +27,5 @@ export default function ReportModal() {
     </div>
   )
 }
+
+export default ReportModal

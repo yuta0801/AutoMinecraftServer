@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function PortModal() {
+const PortModal = () => {
   return (
     <div id="port_modal" className="modal modal-content">
       <div className="modal-header">
@@ -21,3 +21,5 @@ export default function PortModal() {
     </div>
   )
 }
+
+export default PortModal

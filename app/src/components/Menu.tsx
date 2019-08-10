@@ -3,7 +3,7 @@ import New from './New'
 import News from './News'
 const { useState } = React
 
-export default function Menu() {
+const Menu = () => {
   const [isOpen, setMenu] = useState(false)
 
   return (
@@ -23,3 +23,5 @@ export default function Menu() {
     </div>
   )
 }
+
+export default Menu

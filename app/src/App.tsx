@@ -10,7 +10,7 @@ import SettingsModal from './components/SettingsModal'
 import Loading from './components/Loading'
 import './App.css'
 
-export default function App() {
+const App = () => {
   return (
     <div className="App">
       {/* <div></div> */}
@@ -27,3 +27,5 @@ export default function App() {
     </div>
   )
 }
+
+export default App

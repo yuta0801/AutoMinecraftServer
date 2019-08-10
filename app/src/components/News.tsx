@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function New() {
+const News = () => {
   return (
     <>
       <h2>最新情報</h2>
@@ -9,3 +9,5 @@ export default function New() {
     </>
   )
 }
+
+export default News

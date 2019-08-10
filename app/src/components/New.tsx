@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function New() {
+const New = () => {
   return (
     <>
       <h2>新規作成</h2>
@@ -22,3 +22,5 @@ export default function New() {
     </>
   )
 }
+
+export default New
