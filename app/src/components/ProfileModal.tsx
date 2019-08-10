@@ -112,7 +112,7 @@ const ProfileModal = () => {
         </div>
           <label><input id="latest_check" type="checkbox" />latest(最新版、Forgeのみ)</label>
         </dd></dl>
-        <div className="progress progress-striped active"><div id="progress" className="progress-bar progress-bar-info" id="loading"></div></div>
+        <div className="progress progress-striped active"><div id="progress" className="progress-bar progress-bar-info"></div></div>
         <p id="progress_text" className="text-right">処理中...(0%)</p>
       </div>
       <div id="profile_modal_footer" className="modal-footer">

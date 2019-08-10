@@ -8,7 +8,7 @@ const Menu = () => {
 
   return (
     <div>
-      <div id="menu_button" className={ isOpen && 'opened' } onClick={() => setMenu(!isOpen)}>
+      <div id="menu_button" className={ isOpen ? 'opened' : '' } onClick={() => setMenu(!isOpen)}>
         <a id="menu_title">MENU</a>
         <div id="menu_icon"></div>
       </div>

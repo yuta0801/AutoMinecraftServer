@@ -25,10 +25,10 @@ const ManageModal = () => {
                 <tr><th>難易度[difficulty]</th><th>イージー</th><th>
                   <div className="dropdown"><a className="btn btn-default dropdown-toggle" id="difficulty" data-toggle="dropdown">イージー<span className="caret"></span></a>
                     <ul className="dropdown-menu properties_drop" role="menu" aria-labelledby="difficulty">
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">ピースフル</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">イージー</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">ノーマル</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">ハード</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">ピースフル</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">イージー</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">ノーマル</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">ハード</a></li>
                     </ul></div></th></tr>
                 <tr><th>GameSpy4 protocol serverの許可[enable-query]</th><th>無効</th><th><input id="enable-query" className="properties_toggle" type="checkbox" name="toggle" /></th></tr>
                 <tr><th>コンソールへのリモート接続の許可[enable-rcon]</th><th>無効</th><th><input id="enable-rcon" className="properties_toggle" type="checkbox" name="toggle" /></th></tr>
@@ -37,10 +37,10 @@ const ManageModal = () => {
                 <tr><th>ゲームモード[gamemode]</th><th>サバイバル</th><th>
                   <div className="dropdown"><a className="btn btn-default dropdown-toggle" id="gamemode" data-toggle="dropdown">サバイバル<span className="caret"></span></a>
                     <ul className="dropdown-menu properties_drop" role="menu" aria-labelledby="gamemode">
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">サバイバル</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">クリエイティブ</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">アドベンチャー</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">スペクテイター</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">サバイバル</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">クリエイティブ</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">アドベンチャー</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">スペクテイター</a></li>
                     </ul></div></th></tr>
                 <tr><th>建物の生成[generate-structures]</th><th>有効</th><th><input id="generate-structures" className="properties_toggle" type="checkbox" name="toggle" defaultChecked /></th></tr>
                 <tr><th>スーパーフラットの設定[generator-settings]</th><th></th><th><input id="generator-settings" type="text" className="form-control input-sm properties_text" /></th></tr>
@@ -50,11 +50,11 @@ const ManageModal = () => {
                 <tr><th>ワールド作成時の地形[level-type]</th><th>通常</th><th>
                   <div className="dropdown"><a className="btn btn-default dropdown-toggle" id="level-type" data-toggle="dropdown">通常<span className="caret"></span></a>
                     <ul className="dropdown-menu properties_drop" role="menu" aria-labelledby="level-type">
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">通常</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">フラット</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">大きなバイオーム</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">アンプリファイド</a></li>
-                      <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">カスタマイズ</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">通常</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">フラット</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">大きなバイオーム</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">アンプリファイド</a></li>
+                      <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">カスタマイズ</a></li>
                     </ul></div></th></tr>
                 <tr><th>ワールドの高さの限界[max-build-height]</th><th>256</th><th><input id="max-build-height" type="number" min="0" className="form-control input-sm properties_text" defaultValue="256" /></th></tr>
                 <tr><th>最大同時接続数[max-players]</th><th>20</th><th><input id="max-players" type="number" min="0" className="form-control input-sm properties_text" defaultValue="20" /></th></tr>

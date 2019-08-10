@@ -11,12 +11,12 @@ const Loading = () => {
     return () => clearTimeout(timerId)
   }, [])
 
-  return isLoading && (
+  return isLoading ? (
     <div id="loading">
       <div id="loading_bar" />
       <div id="loading_text">読み込み中...</div>
     </div>
-  )
+  ) : null
 }
 
 export default Loading

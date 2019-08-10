@@ -10,9 +10,9 @@ const ReportModal = () => {
       <div className="modal-body">
         内容:<div className="dropdown"><a className="btn btn-default dropdown-toggle" id="report_type" data-toggle="dropdown">不具合報告<span className="caret"></span></a>
           <ul id="report_type_select" className="dropdown-menu" role="menu" aria-labelledby="report_type">
-            <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">不具合報告</a></li>
-            <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">不具合報告(ポート開放)</a></li>
-            <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">要望</a></li>
+            <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">不具合報告</a></li>
+            <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">不具合報告(ポート開放)</a></li>
+            <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">要望</a></li>
           </ul></div>
         <p id="port_text_h">このレポートには以下のデータが含まれます</p>
         <textarea id="port_text"></textarea>
