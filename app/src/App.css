@@ -37,7 +37,7 @@
   white-space: nowrap;
 }
 
-#main #main_right #detail_content div {
+#main #main_right #detail_content .noserver {
   position: absolute;
   z-index: -10;
   top: 30px;
@@ -69,8 +69,13 @@
 
 /* news */
 
-#main_left > div:nth-child(1) > div,
-#menu > div:nth-child(1) > div > div {
+#main_left .info {
+  white-space: nowrap;
+  overflow: auto;
+  height: 40%;
+}
+
+#menu .info {
   white-space: nowrap;
   overflow: auto;
   height: 60%;
