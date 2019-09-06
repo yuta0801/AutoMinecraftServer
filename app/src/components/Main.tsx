@@ -3,6 +3,22 @@ import New from './New'
 import News from './News'
 import Servers from './Servers'
 
+const dummyLogs = [
+  ['00:00:00', 'Info', 'Starting minecraft server version 1.12'],
+  ['00:00:00', 'Info', 'Loading properties'],
+  ['00:00:00', 'Info', 'server.properties does not exist'],
+  ['00:00:00', 'Info', 'Generating new properties file'],
+  ['00:00:00', 'Info', 'Failed to load eula.txt'],
+  ['00:00:00', 'Info', 'You need to agree to the EULA in order to run the server. Go to eula.txt for more info.'],
+  ['00:00:00', 'Info', 'Stopping server'],
+  ['00:00:00', 'Info', 'Stopping server'],
+]
+
+const dummyData = {
+  a: { id: 'a', name: 'hoge', status: 'starting', log: dummyLogs },
+  b: { id: 'b', name: 'fuga', status: 'running', log: dummyLogs },
+} as const
+
 const Main = () => {
   return (
     <div id="main">
@@ -17,10 +33,7 @@ const Main = () => {
         <New />
       </div>
       <div id="main_right" className="col-xs-8 s-pad">
-        <Servers servers={{
-          a: { id: 'a', name: 'hoge', status: 'starting' },
-          b: { id: 'b', name: 'fuga', status: 'running' },
-        }} />
+        <Servers servers={dummyData} />
       </div>
     </div>
   )

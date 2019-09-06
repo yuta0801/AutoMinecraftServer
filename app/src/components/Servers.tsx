@@ -7,6 +7,7 @@ interface ServersProps {
       id: string
       name: string
       status: 'starting' | 'running' | 'stopping' | 'stopped'
+      log: string[][]
     }
   }
 }

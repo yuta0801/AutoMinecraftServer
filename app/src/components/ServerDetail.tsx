@@ -1,10 +1,12 @@
 import React from 'react'
+import ServerLog from './ServerLog'
 
 interface ServerDetailProps {
   server: {
     id: string
     name: string
     status: 'starting' | 'running' | 'stopping' | 'stopped'
+    log: string[][]
   },
   handleOpenDirectry?(): void,
   handleOpenManageModal?(): void,
@@ -50,17 +52,7 @@ const ServerDetail = (props: ServerDetailProps) => {
           <button className="btn btn-danger pull-right bt-four" onClick={props.handleKill}>強制終了</button>
         </div>
       </div>
-      <table className="table table-hover table-condensed">
-        <thead>
-          <tr>
-            <th data-field="id" data-align="right">時刻</th>
-            <th data-field="name" data-align="center">類</th>
-            <th data-field="price">ログ</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
+      <ServerLog logs={server.log} />
       <input type="text" disabled={server.status !== 'running'} className="form-control input-sm" placeholder="コマンドを入力..." value="過去ログを表示しています" style={{ display: 'inline-block', width: '89%', margin: '0 0.5%' }} />
       <button disabled={server.status !== 'running'} className="btn btn-primary" style={{ margin: '0 0.5%', width: '9%', padding: '1px', height: '24px' }}>送信</button>
     </div>
