@@ -91,13 +91,14 @@
   left: 10%;
   min-height: 350px;
   min-width: 500px;
+  display: block;
 }
 
 #profile_modal #profile_modal_body #zip_explain {
   display: none;
 }
 
-#profile_modal #profile_modal_body input:first-of-type {
+#profile_modal #profile_modal_body dd:nth-child(3) input:first-child {
   display: none;
 }
 
@@ -111,14 +112,6 @@
 
 #profile_modal #profile_modal_body dl dd:nth-child(13) div div:nth-child(n + 2) {
   padding: 0 1px;
-}
-
-#profile_modal #profile_modal_body dl dd:nth-child(15) {
-  display: none;
-}
-
-#profile_modal #profile_modal_body dl dd:nth-child(16) {
-  display: none;
 }
 
 #profile_modal #profile_modal_body dl dd:nth-child(16) div {

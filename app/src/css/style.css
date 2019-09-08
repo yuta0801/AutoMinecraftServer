@@ -284,7 +284,6 @@ input[type="range"].custom {
 	background-color: #555;
 	border:0;
 	height:2px;
-	margin:0;
 }
 input[type="range"].custom::-webkit-slider-thumb{
 	-webkit-appearance: none;
