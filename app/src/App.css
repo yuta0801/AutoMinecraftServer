@@ -118,11 +118,6 @@
   display: inline-block;
 }
 
-#profile_modal #profile_modal #version_body {
-  height: 200px;
-  overflow-x: hidden;
-}
-
 #profile_modal #profile_modal_body > div {
   display: none;
   margin-bottom: 4px;

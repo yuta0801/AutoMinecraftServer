@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import useModal from '../hooks/useModal'
 import { Profile } from '../types'
-import { Slider } from './atoms/Form'
+import { Slider, Dropdown } from './atoms/Form'
 
 interface ProfileModalProps {
   handleSave(profile: Profile): void
@@ -22,9 +22,39 @@ const PROFILE_DEFAULT = {
   backup_count: '5',
 }
 
+const VERSION = [
+  'バニラサーバー',
+  ...[
+    'Vanila 1.12.2', 'Vanila 1.12.1', 'Vanila 1.12', 'Vanila 1.11.2',
+    'Vanila 1.11.1', 'Vanila 1.11', 'Vanila 1.10.2', 'Vanila 1.10.1',
+    'Vanila 1.10', 'Vanila 1.9.4', 'Vanila 1.9.3', 'Vanila 1.9.2',
+    'Vanila 1.9.1', 'Vanila 1.9', 'Vanila 1.8.9', 'Vanila 1.8.8',
+    'Vanila 1.8.7', 'Vanila 1.8.6', 'Vanila 1.8.5', 'Vanila 1.8.4',
+    'Vanila 1.8.3', 'Vanila 1.8.2', 'Vanila 1.8.1', 'Vanila 1.8',
+    'Vanila 1.7.10', 'Vanila 1.7.9', 'Vanila 1.7.5', 'Vanila 1.7.4',
+    'Vanila 1.7.2', 'Vanila 1.6.4', 'Vanila 1.6.2', 'Vanila 1.6.1',
+    'Vanila 1.5.2', 'Vanila 1.5.1', 'Vanila 1.4.7', 'Vanila 1.4.6',
+    'Vanila 1.4.5', 'Vanila 1.4.4', 'Vanila 1.4.2', 'Vanila 1.3.2',
+    'Vanila 1.3.1', 'Vanila 1.2.5', 'Vanila 1.2.4', 'Vanila 1.2.3',
+    'Vanila 1.2.2', 'Vanila 1.2.1', 'Vanila 1.1', 'Vanila 1.0',
+  ].map(version => ({ value: version })),
+  'Forgeサーバー',
+  ...[
+    'Forge 1.12.2', 'Forge 1.12.1', 'Forge 1.12', 'Forge 1.11.2', 'Forge 1.11',
+    'Forge 1.10.2', 'Forge 1.10', 'Forge 1.9.4', 'Forge 1.9', 'Forge 1.8.9',
+    'Forge 1.8.8', 'Forge 1.8', 'Forge 1.7.10', 'Forge 1.7.2', 'Forge 1.6.4',
+    'Forge 1.6.3', 'Forge 1.6.2', 'Forge 1.6.1', 'Forge 1.5.2',
+    // 'Forge 1.5.1', 'Forge 1.5', 'Forge 1.4.7', 'Forge 1.4.6',
+    // 'Forge 1.4.5', 'Forge 1.4.4', 'Forge 1.4.3', 'Forge 1.4.2',
+    // 'Forge 1.4.1', 'Forge 1.4.0', 'Forge 1.3.2', 'Forge 1.2.5',
+    // 'Forge 1.2.4', 'Forge 1.2.3', 'Forge 1.1',
+  ].map(version => ({ value: version })),
+]
+
 const ProfileModal = (props: ProfileModalProps) => {
   const [state, setState] = useState(props.profile || PROFILE_DEFAULT)
   const [versionChange, toggleVersionChange] = useState(props.new || false)
+  const [version, toggleVersion] = useState('')
 
   return useModal(
     <div id="profile_modal" className="modal modal-content">
@@ -50,94 +80,7 @@ const ProfileModal = (props: ProfileModalProps) => {
           { !props.new && <dd><label><input id="change_check" type="checkbox" onChange={e => toggleVersionChange(e.target.checked)} /> Minecraftバージョンを変更</label></dd> }
           { versionChange && (
             <dd>
-              <div className="dropdown"><a className="btn btn-default dropdown-toggle" id="version" data-toggle="dropdown">選択<span className="caret"></span></a>
-                <ul id="version_body" className="dropdown-menu" role="menu" aria-labelledby="version">
-                  <li role="presentation" className="dropdown-header">バニラサーバー</li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.12.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.12.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.12</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.11.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.11.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.11</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.10.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.10.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.10</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.9.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.9.3</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.9.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.9.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.9</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.9</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.8</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.7</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.6</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.5</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.3</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.8</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.7.10</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.7.9</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.7.5</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.7.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.7.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.6.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.6.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.6.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.5.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.5.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.4.7</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.4.6</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.4.5</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.4.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.4.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.3.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.3.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.2.5</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.2.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.2.3</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.2.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.2.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Vanila 1.0</a></li>
-                  <li role="presentation" className="dropdown-header">Forgeサーバー</li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.12.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.12.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.12</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.11.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.11</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.10.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.10</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.9.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.9</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.8.9</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.8.8</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.8</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.7.10</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.7.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.6.4</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.6.3</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.6.2</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.6.1</a></li>
-                  <li role="presentation"><a role="menuitem" href="#" onClick={() => {/* ver(this) */ }}>Forge 1.5.2</a></li>
-                  {/* <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.5.1</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.5</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.7</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.6</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.5</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.4</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.3</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.2</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.1</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.4.0</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.3.2</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.2.5</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.2.4</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.2.3</a></li>
-                    <li role="presentation"><a role="menuitem" tabIndex="-1" href="#">Forge 1.1</a></li> */}
-                </ul>
-              </div>
+              <Dropdown options={VERSION} value={version} onChange={version => toggleVersion(version)}></Dropdown>
               <label><input id="latest_check" type="checkbox" />latest(最新版、Forgeのみ)</label>
             </dd>
           ) }
