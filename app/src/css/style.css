@@ -278,32 +278,6 @@ label {
     opacity: 0.6;
 }
 
-/*スライダー*/
-input[type="range"].custom {
-	-webkit-appearance: none;
-	background-color: #555;
-	border:0;
-	height:2px;
-}
-input[type="range"].custom::-webkit-slider-thumb{
-	-webkit-appearance: none;
-	background-color: #666;
-	text-align:center;
-	width: 15px;
-	height: 15px;
-	border:1px solid #FFF;
-	border-radius:15px;
-	cursor:pointer;
-	box-sizing:border-box;
-}
-input[type="range"].custom::-webkit-slider-thumb:hover {
-	background-color: #777;
-}
-
-input[type="range"].custom:focus {
-	outline:none;
-}
-
 /* checkboxとテキストのスペース */
 #profile_modal input[type=checkbox],
 #settings_modal input[type=checkbox] {

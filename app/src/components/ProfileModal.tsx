@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Slider } from './atoms/Form'
 
 interface Profile {
   name: string
@@ -37,9 +38,9 @@ const ProfileModal = (props: ProfileModalProps) => {
           <dt>jarファイル : </dt><dd><div id="jar_input_div"><input id="jar_input" type="text" className="form-control input-sm left-input" value={state.jar} onChange={e => setState({ ...state, jar: e.target.value })} /><button id="jar_select" type="button" className="btn btn-default right-button">参照</button></div>
             <div id="jar_choice_div"><div className="dropdown"><a className="btn btn-default dropdown-toggle" id="jar_choice" data-toggle="dropdown">必ず選択してください<span className="caret"></span></a>
               <ul id="jar_list" className="dropdown-menu" role="menu" aria-labelledby="jar_choice"></ul></div></div></dd>
-          <dt>最大メモリ : </dt><dd><input id="max_memory_slider" type="range" min={512} max={4096} step={128} className="custom left-input" value={state.max_memory} onChange={e => setState({ ...state, max_memory: state.min_memory > Number(e.target.value) ? state.min_memory : Number(e.target.value) })} />
+          <dt>最大メモリ : </dt><dd><Slider min={512} max={4096} step={128} className="left-input" value={state.max_memory} onChange={value => setState({ ...state, max_memory: state.min_memory > value ? state.min_memory : value })} />
             <input id="max_memory_text" type="text" className="form-control input-sm right-button" defaultValue="1024MB" value={state.max_memory + 'MB'} onChange={e => setState({ ...state, max_memory: parseInt(e.target.value) })} /></dd>
-          <dt>最小メモリ : </dt><dd><input id="min_memory_slider" type="range" min={512} max={4096} step={128} className="custom left-input" value={state.min_memory} onChange={e => setState({ ...state, min_memory: state.max_memory < Number(e.target.value) ? state.max_memory : Number(e.target.value) })} />
+          <dt>最小メモリ : </dt><dd><Slider min={512} max={4096} step={128} className="left-input" value={state.min_memory} onChange={value => setState({ ...state, min_memory: state.max_memory < value ? state.max_memory : value })} />
             <input id="min_memory_text" type="text" className="form-control input-sm right-button" defaultValue="512MB" value={state.min_memory + 'MB'} onChange={e => setState({ ...state, min_memory: parseInt(e.target.value) })} /></dd>
           <dt>オプション : </dt><dd><label><input id="upnp_check" type="checkbox" checked={state.upnp} onChange={e => setState({ ...state, upnp: e.target.checked })} />UPnPによるポート開放</label><br />
             <div className="row"><div className="col-xs-5"><label><input id="backup_check" type="checkbox" checked={state.backup} onChange={e => setState({ ...state, backup: e.target.checked })} />自動バックアップ</label></div><div className="col-xs-2"><input id="backup_minute" type="number" min="1" className="form-control input-sm" defaultValue="10" value={state.backup_minute} onChange={e => setState({ ...state, backup_minute: e.target.value })} /></div><div className="col-xs-1"> 分毎</div><div className="col-xs-2"><input id="backup_count" type="number" min="1" className="form-control input-sm" defaultValue="5" value={state.backup_count} onChange={e => setState({ ...state, backup_count: e.target.value })} /></div><div className="col-xs-2"> 個まで</div></div></dd>
