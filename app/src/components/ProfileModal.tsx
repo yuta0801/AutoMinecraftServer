@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
-import ReactDOM from 'react-dom'
+import React, { useState } from 'react'
+import useModal from '../hooks/useModal'
 import { Profile } from '../types'
 import { Slider } from './atoms/Form'
 
@@ -11,20 +11,10 @@ interface ProfileModalProps {
 }
 
 const ProfileModal = (props: ProfileModalProps) => {
-  const root = useRef(document.createElement('div'))
-
-  useEffect(() => {
-    document.body.appendChild(root.current)
-
-    return () => {
-      document.body.removeChild(root.current)
-    }
-  }, [])
-
   const [state, setState] = useState(props.profile)
   const [versionChange, toggleVersionChange] = useState(props.new || false)
 
-  return ReactDOM.createPortal(
+  return useModal(
     <div id="profile_modal" className="modal modal-content">
       <div className="modal-header">
         <button id="profile_modal_close" type="button" onClick={props.handleClose} className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -147,8 +137,7 @@ const ProfileModal = (props: ProfileModalProps) => {
         <button id="profile_save" type="button" onClick={() => (props.handleSave(state), props.handleClose())} className="btn btn-primary">保存</button>
         <button type="button" onClick={props.handleClose} className="btn btn-default" data-dismiss="modal">キャンセル</button>
       </div>
-    </div>,
-    root.current
+    </div>
   )
 }
 
