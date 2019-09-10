@@ -16,17 +16,6 @@ const App = () => {
       {/* <div></div> */}
       <Main />
       <Menu />
-      {/* <ProfileModal profile={{
-        name: 'Hoge',
-        folder: '/path/to/server',
-        jar: '/path/to/server/minecraft_server.jar',
-        max_memory: 1024,
-        min_memory: 512,
-        upnp: true,
-        backup: true,
-        backup_minute: '10',
-        backup_count: '5'
-      }} /> */}
       <EulaModal />
       <ManageModal />
       <ReportModal />

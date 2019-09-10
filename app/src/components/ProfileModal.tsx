@@ -6,12 +6,24 @@ import { Slider } from './atoms/Form'
 interface ProfileModalProps {
   handleSave(profile: Profile): void
   handleClose(): void
-  profile: Profile
+  profile?: Profile
   new?: boolean
 }
 
+const PROFILE_DEFAULT = {
+  name: '',
+  folder: '',
+  jar: '',
+  max_memory: 1024,
+  min_memory: 512,
+  upnp: true,
+  backup: true,
+  backup_minute: '10',
+  backup_count: '5',
+}
+
 const ProfileModal = (props: ProfileModalProps) => {
-  const [state, setState] = useState(props.profile)
+  const [state, setState] = useState(props.profile || PROFILE_DEFAULT)
   const [versionChange, toggleVersionChange] = useState(props.new || false)
 
   return useModal(

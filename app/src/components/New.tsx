@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ProfileModal from './ProfileModal'
 
 const New = () => {
+  const [showProfileModal, toggleProfileModal] = useState(false)
+
   return (
     <>
       <h2>新規作成</h2>
-      <button className="btn btn-primary btn-block" data-toggle="modal" data-target="#profile_modal">サーバーを新たに作成する</button>
+      <button className="btn btn-primary btn-block" onClick={() => toggleProfileModal(true)}>サーバーを新たに作成する</button>
       <div className="drag_area">
         <p className="text-center">使用するフォルダ/Zipファイルをドロップ</p>
         <p className="text-center">または</p>
@@ -14,6 +17,7 @@ const New = () => {
           <button className="drag_click_folder btn btn-primary btn-block">フォルダを選択</button>
         </div>
       </div>
+      { showProfileModal && <ProfileModal handleClose={() => toggleProfileModal(false)} handleSave={() => {}} new /> }
       <button className="btn btn-default btn-block" data-toggle="modal" data-target="#port_modal">ポート開放(マニュアル)</button>
       <button className="btn btn-default btn-block" data-toggle="modal" data-target="#settings_modal">設定</button>
       <button className="btn btn-warning btn-block" data-toggle="modal" data-target="#report_modal">不具合/要望</button>
