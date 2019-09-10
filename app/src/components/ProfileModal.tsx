@@ -1,17 +1,6 @@
 import React, { useState } from 'react'
+import { Profile } from '../types'
 import { Slider } from './atoms/Form'
-
-interface Profile {
-  name: string
-  folder: string
-  jar: string
-  max_memory: number
-  min_memory: number
-  upnp: boolean
-  backup: boolean
-  backup_minute: string
-  backup_count: string
-}
 
 interface ProfileModalProps {
   handleSave?(profile: Profile): void

@@ -1,13 +1,9 @@
 import React from 'react'
+import { Server } from '../types'
 import ServerLog from './ServerLog'
 
 interface ServerDetailProps {
-  server: {
-    id: string
-    name: string
-    status: 'starting' | 'running' | 'stopping' | 'stopped'
-    log: string[][]
-  },
+  server: Server,
   handleOpenDirectry?(): void,
   handleOpenManageModal?(): void,
   handleOpenProfileModal?(): void,

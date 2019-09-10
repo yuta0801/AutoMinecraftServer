@@ -1,14 +1,10 @@
 import React, { useState } from 'react'
-import Server from './ServerDetail'
+import { Server } from '../types'
+import ServerDetail from './ServerDetail'
 
 interface ServersProps {
   servers: {
-    [id: string]: {
-      id: string
-      name: string
-      status: 'starting' | 'running' | 'stopping' | 'stopped'
-      log: string[][]
-    }
+    [id: string]: Server
   }
 }
 
@@ -27,7 +23,7 @@ const Servers = (props: ServersProps) => {
       </ul>
       <div id="detail_content" className="tab-content">
         {props.servers[currentTabId] ? (
-          <Server server={props.servers[currentTabId]} />
+          <ServerDetail server={props.servers[currentTabId]} />
         ) : (
           <div className="noserver">
             <h1>！サーバーがありません！</h1>
