@@ -15,4 +15,5 @@ export interface Server {
   name: string
   status: 'starting' | 'running' | 'stopping' | 'stopped'
   log: string[][]
+  profile: Profile
 }

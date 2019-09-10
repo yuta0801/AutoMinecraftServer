@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Server } from '../types'
 import ServerLog from './ServerLog'
+import ProfileModal from './ProfileModal'
 
 interface ServerDetailProps {
   server: Server,
   handleOpenDirectry?(): void,
   handleOpenManageModal?(): void,
-  handleOpenProfileModal?(): void,
   handleRemoveProfile?(): void,
   handleRestart?(): void,
   handleStop?(): void,
@@ -24,6 +24,8 @@ const STATUS = {
 const ServerDetail = (props: ServerDetailProps) => {
   const { server } = props
 
+  const [showProfileModal, toggleProfileModal] = useState(false)
+
   return (
     <div className="tab-pane active" style={{ marginTop: '4px' }}>
       <div id="row">
@@ -40,7 +42,8 @@ const ServerDetail = (props: ServerDetailProps) => {
         <div className="col-sm-7" style={{ maxWidth: '400px', float: 'right', padding: '0' }} data-id={`${server.id}`}>
           <button className="btn btn-primary btn-block bt-one" onClick={props.handleOpenDirectry}>作業フォルダーを開く</button>
           <button className="btn btn-primary btn-block bt-one" onClick={props.handleOpenManageModal}>サーバー/ログ/コマンド履歴/バックアップの管理</button>
-          <button className="btn btn-warning bt-two" onClick={props.handleOpenProfileModal} disabled={server.status !== 'stopped'}>プロファイルの編集</button>
+          <button className="btn btn-warning bt-two" onClick={() => toggleProfileModal(true)} disabled={server.status !== 'stopped'}>プロファイルの編集</button>
+          { showProfileModal && <ProfileModal profile={server.profile} handleClose={() => toggleProfileModal(false)} handleSave={() => {}} /> }
           <button className="btn btn-danger bt-two" onClick={props.handleRemoveProfile} disabled={server.status !== 'stopped'}>プロファイルの削除</button>
           <button className="btn btn-info pull-right bt-four" onClick={props.handleRestart} disabled={server.status !== 'running'}>再起動</button>
           <button className="btn btn-danger pull-right bt-four" onClick={props.handleStop} disabled={server.status !== 'running'}>停止</button>

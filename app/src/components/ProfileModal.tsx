@@ -1,22 +1,33 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import ReactDOM from 'react-dom'
 import { Profile } from '../types'
 import { Slider } from './atoms/Form'
 
 interface ProfileModalProps {
-  handleSave?(profile: Profile): void
-  handleCancel?(): void
+  handleSave(profile: Profile): void
+  handleClose(): void
   profile: Profile
   new?: boolean
 }
 
 const ProfileModal = (props: ProfileModalProps) => {
+  const root = useRef(document.createElement('div'))
+
+  useEffect(() => {
+    document.body.appendChild(root.current)
+
+    return () => {
+      document.body.removeChild(root.current)
+    }
+  }, [])
+
   const [state, setState] = useState(props.profile)
   const [versionChange, toggleVersionChange] = useState(props.new || false)
 
-  return (
+  return ReactDOM.createPortal(
     <div id="profile_modal" className="modal modal-content">
       <div className="modal-header">
-        <button id="profile_modal_close" type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button id="profile_modal_close" type="button" onClick={props.handleClose} className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
         <h4 id="profile_edit_title" className="modal-title">プロファイルの編集</h4>
       </div>
       <div id="profile_modal_body" className="modal-body">
@@ -133,10 +144,11 @@ const ProfileModal = (props: ProfileModalProps) => {
         <p id="progress_text" className="text-right">処理中...(0%)</p>
       </div>
       <div id="profile_modal_footer" className="modal-footer">
-        <button id="profile_save" type="button" onClick={() => props.handleSave && props.handleSave(state)} className="btn btn-primary">保存</button>
-        <button type="button" onClick={props.handleCancel} className="btn btn-default" data-dismiss="modal">キャンセル</button>
+        <button id="profile_save" type="button" onClick={() => (props.handleSave(state), props.handleClose())} className="btn btn-primary">保存</button>
+        <button type="button" onClick={props.handleClose} className="btn btn-default" data-dismiss="modal">キャンセル</button>
       </div>
-    </div>
+    </div>,
+    root.current
   )
 }
 

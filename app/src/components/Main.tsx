@@ -14,9 +14,21 @@ const dummyLogs = [
   ['00:00:00', 'Info', 'Stopping server'],
 ]
 
+const dummyProfile = {
+  name: 'Hoge',
+  folder: '/path/to/server',
+  jar: '/path/to/server/minecraft_server.jar',
+  max_memory: 1024,
+  min_memory: 512,
+  upnp: true,
+  backup: true,
+  backup_minute: '10',
+  backup_count: '5'
+}
+
 const dummyData = {
-  a: { id: 'a', name: 'hoge', status: 'starting', log: dummyLogs },
-  b: { id: 'b', name: 'fuga', status: 'running', log: dummyLogs },
+  a: { id: 'a', name: 'hoge', status: 'stopped', log: dummyLogs, profile: dummyProfile },
+  b: { id: 'b', name: 'fuga', status: 'running', log: dummyLogs, profile: dummyProfile },
 } as const
 
 const Main = () => {
