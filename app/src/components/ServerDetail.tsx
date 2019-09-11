@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Server } from '../types'
 import ServerLog from './ServerLog'
 import ProfileModal from './ProfileModal'
+import RelativeTime from './atoms/RelativeTime'
 
 interface ServerDetailProps {
   server: Server,
@@ -32,8 +33,8 @@ const ServerDetail = (props: ServerDetailProps) => {
         <div className="col-xs-5 s-pad">
           <p>ステータス：{STATUS[server.status]}</p>
           <p style={{ overflowX: 'hidden' }}>開始時刻：----/--/-- --:--:--</p>
-          <p style={{ width: '50%', float: 'right' }}>無人時間：--:--:--</p>
-          <p>経過時間：--:--:--</p>
+          <p style={{ width: '50%', float: 'right' }}>無人時間：<RelativeTime date={new Date()} /></p>
+          <p>経過時間：<RelativeTime date={new Date()} /></p>
           <p>次回予定：</p>
           <a data-toggle="popover" data-html="true" data-placement="right" data-trigger="manual" style={{ width: '120%', cursor: 'pointer' }}>ポート：閉鎖</a>
           <div className="players">
