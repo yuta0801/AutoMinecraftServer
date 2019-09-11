@@ -264,6 +264,20 @@ label {
 }
 
 /*ポート開放ポップアップのSNSシェア*/
+.Popover-body {
+    background-color: #808080;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    line-break: auto;
+    color: white;
+    padding: 9px 14px;
+}
+
+.Popover-tipShape {
+    fill: #808080;
+}
+
 .popover-content a {
     display: inline-block;
     height: 30px;

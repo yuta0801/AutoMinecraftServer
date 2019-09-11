@@ -3,6 +3,7 @@ import { Server } from '../types'
 import ServerLog from './ServerLog'
 import ProfileModal from './ProfileModal'
 import RelativeTime from './atoms/RelativeTime'
+import Popover from './atoms/Popover'
 
 interface ServerDetailProps {
   server: Server,
@@ -25,6 +26,8 @@ const STATUS = {
 const ServerDetail = (props: ServerDetailProps) => {
   const { server } = props
 
+  const popupTargetRef = React.createRef<HTMLAnchorElement>()
+  const [showPortPopup, togglePortPopup] = useState(false)
   const [showProfileModal, toggleProfileModal] = useState(false)
 
   return (
@@ -36,7 +39,18 @@ const ServerDetail = (props: ServerDetailProps) => {
           <p style={{ width: '50%', float: 'right' }}>無人時間：<RelativeTime date={new Date()} /></p>
           <p>経過時間：<RelativeTime date={new Date()} /></p>
           <p>次回予定：</p>
-          <a data-toggle="popover" data-html="true" data-placement="right" data-trigger="manual" style={{ width: '120%', cursor: 'pointer' }}>ポート：閉鎖</a>
+          <a onClick={() => togglePortPopup(true)} ref={popupTargetRef} style={{ width: '120%', cursor: 'pointer' }}>ポート：閉鎖</a>
+          { showPortPopup && (
+            <Popover title="ポート開放" target={popupTargetRef} hide={() => togglePortPopup(false)}>
+              <>
+                <p>ポート番号: {props.server.port && props.server.port.port}</p>
+                <p>ローカルメインIP: {props.server.port && props.server.port.local_ip}</p>
+                <p>ゲートウェイIP: {props.server.port && props.server.port.gateway_ip}</p>
+                <p>グローバルIP: {props.server.port && props.server.port.global_ip}</p>
+                <p>外部疎通チェック: {props.server.port && props.server.port.check}</p>
+              </>
+            </Popover>
+          ) }
           <div className="players">
           </div>
         </div>

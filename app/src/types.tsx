@@ -10,10 +10,19 @@ export interface Profile {
   backup_count: string;
 }
 
+export interface Port {
+  port: string
+  local_ip: string
+  gateway_ip: string
+  global_ip: string
+  check: string
+}
+
 export interface Server {
   id: string
   name: string
   status: 'starting' | 'running' | 'stopping' | 'stopped'
   log: string[][]
   profile: Profile
+  port?: Port
 }
