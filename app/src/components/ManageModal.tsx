@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 
-const ManageModal = () => {
+interface ManageModalProps {
+  handleClose(): void
+}
+
+const ManageModal = (props: ManageModalProps) => {
   const [currentTab, toggleTab] = useState(0)
   
   return (
     <div id="manage_modal" className="modal modal-content">
       <div className="modal-header">
-        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={props.handleClose}>&times;</button>
         <h4 id="manage_title" className="modal-title">サーバー/ログ/コマンド履歴/バックアップの管理</h4>
       </div>
       <div className="modal-body">
@@ -100,7 +104,7 @@ const ManageModal = () => {
         </div>
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-default" data-dismiss="modal">閉じる</button>
+        <button type="button" className="btn btn-default" data-dismiss="modal" onClick={props.handleClose}>閉じる</button>
       </div>
     </div>
   )

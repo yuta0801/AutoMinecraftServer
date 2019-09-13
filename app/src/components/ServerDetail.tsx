@@ -58,7 +58,7 @@ const ServerDetail = (props: ServerDetailProps) => {
         <div className="col-sm-7" style={{ maxWidth: '400px', float: 'right', padding: '0' }} data-id={`${server.id}`}>
           <button className="btn btn-primary btn-block bt-one" onClick={props.handleOpenDirectry}>作業フォルダーを開く</button>
           <button className="btn btn-primary btn-block bt-one" onClick={() => toggleManageModal(true)}>サーバー/ログ/コマンド履歴/バックアップの管理</button>
-          { showManageModal && <ManageModal /> }
+          { showManageModal && <ManageModal handleClose={() => toggleManageModal(false)} /> }
           <button className="btn btn-warning bt-two" onClick={() => toggleProfileModal(true)} disabled={server.status !== 'stopped'}>プロファイルの編集</button>
           { showProfileModal && <ProfileModal profile={server.profile} handleClose={() => toggleProfileModal(false)} handleSave={() => {}} /> }
           <button className="btn btn-danger bt-two" onClick={props.handleRemoveProfile} disabled={server.status !== 'stopped'}>プロファイルの削除</button>
