@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Server } from '../types'
 import ServerLog from './ServerLog'
+import ManageModal from './ManageModal'
 import ProfileModal from './ProfileModal'
 import RelativeTime from './atoms/RelativeTime'
 import Popover from './atoms/Popover'
@@ -8,7 +9,6 @@ import Popover from './atoms/Popover'
 interface ServerDetailProps {
   server: Server,
   handleOpenDirectry?(): void,
-  handleOpenManageModal?(): void,
   handleRemoveProfile?(): void,
   handleRestart?(): void,
   handleStop?(): void,
@@ -28,6 +28,7 @@ const ServerDetail = (props: ServerDetailProps) => {
 
   const popupTargetRef = React.createRef<HTMLAnchorElement>()
   const [showPortPopup, togglePortPopup] = useState(false)
+  const [showManageModal, toggleManageModal] = useState(false)
   const [showProfileModal, toggleProfileModal] = useState(false)
 
   return (
@@ -56,7 +57,8 @@ const ServerDetail = (props: ServerDetailProps) => {
         </div>
         <div className="col-sm-7" style={{ maxWidth: '400px', float: 'right', padding: '0' }} data-id={`${server.id}`}>
           <button className="btn btn-primary btn-block bt-one" onClick={props.handleOpenDirectry}>作業フォルダーを開く</button>
-          <button className="btn btn-primary btn-block bt-one" onClick={props.handleOpenManageModal}>サーバー/ログ/コマンド履歴/バックアップの管理</button>
+          <button className="btn btn-primary btn-block bt-one" onClick={() => toggleManageModal(true)}>サーバー/ログ/コマンド履歴/バックアップの管理</button>
+          { showManageModal && <ManageModal /> }
           <button className="btn btn-warning bt-two" onClick={() => toggleProfileModal(true)} disabled={server.status !== 'stopped'}>プロファイルの編集</button>
           { showProfileModal && <ProfileModal profile={server.profile} handleClose={() => toggleProfileModal(false)} handleSave={() => {}} /> }
           <button className="btn btn-danger bt-two" onClick={props.handleRemoveProfile} disabled={server.status !== 'stopped'}>プロファイルの削除</button>
