@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
 import ProfileModal from './ProfileModal'
+import ReportModal from './ReportModal'
+import PortModal from './PortModal'
+import SettingsModal from './SettingsModal'
 
 const New = () => {
   const [showProfileModal, toggleProfileModal] = useState(false)
+  const [showReportModal, toggleReportModal] = useState(false)
+  const [showPortModal, togglePortModal] = useState(false)
+  const [showSettingsModal, toggleSettingsModal] = useState(false)
 
   return (
     <>
@@ -18,9 +24,12 @@ const New = () => {
         </div>
       </div>
       { showProfileModal && <ProfileModal handleClose={() => toggleProfileModal(false)} handleSave={() => {}} new /> }
-      <button className="btn btn-default btn-block" data-toggle="modal" data-target="#port_modal">ポート開放(マニュアル)</button>
-      <button className="btn btn-default btn-block" data-toggle="modal" data-target="#settings_modal">設定</button>
-      <button className="btn btn-warning btn-block" data-toggle="modal" data-target="#report_modal">不具合/要望</button>
+      <button className="btn btn-default btn-block" onClick={() => togglePortModal(true)}>ポート開放(マニュアル)</button>
+      { showReportModal && <ReportModal handleClose={() => toggleReportModal(false)} /> }
+      <button className="btn btn-default btn-block" onClick={() => toggleSettingsModal(true)}>設定</button>
+      { showPortModal && <PortModal handleClose={() => togglePortModal(false)} /> }
+      <button className="btn btn-warning btn-block" onClick={() => toggleReportModal(true)}>不具合/要望</button>
+      { showSettingsModal && <SettingsModal handleClose={() => toggleSettingsModal(false)} /> }
       <button className="btn btn-info btn-block" onClick={() => {/* window.open('http://xperd.net/auto-minecraft-server/') */}}>公式サイトへ</button>
       <button className="reload btn btn-danger btn-block">リフレッシュ</button>
     </>

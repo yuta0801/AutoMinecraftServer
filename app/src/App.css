@@ -180,6 +180,7 @@
   height: 80%;
   min-width: 540px;
   min-height: 400px;
+  display: block;
 }
 
 #report_modal #port_text_h {
@@ -204,6 +205,7 @@
   left: 10%;
   width: 400px;
   height: 200px;
+  display: block;
 }
 
 #port_modal #manual_port {
@@ -224,6 +226,7 @@
   left: 10%;
   min-height: 350px;
   min-width: 500px;
+  display: block;
 }
 
 #settings_modal > .tab-content {

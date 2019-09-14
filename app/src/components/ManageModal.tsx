@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import useModal from '../hooks/useModal'
 
 interface ManageModalProps {
   handleClose(): void
@@ -7,7 +8,7 @@ interface ManageModalProps {
 const ManageModal = (props: ManageModalProps) => {
   const [currentTab, toggleTab] = useState(0)
   
-  return (
+  return useModal(
     <div id="manage_modal" className="modal modal-content">
       <div className="modal-header">
         <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={props.handleClose}>&times;</button>

@@ -3,6 +3,7 @@ import { Server } from '../types'
 import ServerLog from './ServerLog'
 import ManageModal from './ManageModal'
 import ProfileModal from './ProfileModal'
+import EulaModal from './EulaModal'
 import RelativeTime from './atoms/RelativeTime'
 import Popover from './atoms/Popover'
 
@@ -71,6 +72,7 @@ const ServerDetail = (props: ServerDetailProps) => {
       <ServerLog logs={server.log} />
       <input type="text" disabled={server.status !== 'running'} className="form-control input-sm" placeholder="コマンドを入力..." value="過去ログを表示しています" style={{ display: 'inline-block', width: '89%', margin: '0 0.5%' }} />
       <button disabled={server.status !== 'running'} className="btn btn-primary" style={{ margin: '0 0.5%', width: '9%', padding: '1px', height: '24px' }}>送信</button>
+      <EulaModal />
     </div>
   )
 }

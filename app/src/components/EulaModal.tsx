@@ -1,7 +1,8 @@
 import React from 'react'
+import useModal from '../hooks/useModal'
 
 const EulaModal = () => {
-  return (
+  return useModal(
     <div id="eula_modal" className="modal">
       <div className="modal-dialog">
         <div className="modal-content">

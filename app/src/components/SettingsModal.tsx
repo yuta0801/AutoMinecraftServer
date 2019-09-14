@@ -1,10 +1,15 @@
 import React from 'react'
+import useModal from '../hooks/useModal'
 
-const SettingsModal = () => {
-  return (
+interface SettingsModalProps {
+  handleClose(): void
+}
+
+const SettingsModal = (props: SettingsModalProps) => {
+  return useModal(
     <div id="settings_modal" className="modal modal-content">
       <div className="modal-header">
-        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={props.handleClose}>&times;</button>
         <h4 className="modal-title">設定</h4>
       </div>
       <div className="modal-body">
@@ -28,7 +33,7 @@ const SettingsModal = () => {
         </div></div>
       <div className="modal-footer">
         <button id="settings_save" type="button" className="btn btn-primary">保存</button>
-        <button type="button" className="btn btn-default" data-dismiss="modal">キャンセル</button>
+        <button type="button" className="btn btn-default" data-dismiss="modal" onClick={props.handleClose}>キャンセル</button>
       </div>
     </div>
   )

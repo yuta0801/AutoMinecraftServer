@@ -1,10 +1,15 @@
 import React from 'react'
+import useModal from '../hooks/useModal'
 
-const PortModal = () => {
-  return (
+interface PortModalProps {
+  handleClose(): void
+}
+
+const PortModal = (props: PortModalProps) => {
+  return useModal(
     <div id="port_modal" className="modal modal-content">
       <div className="modal-header">
-        <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <button type="button" className="close" data-dismiss="modal" aria-hidden="true" onClick={props.handleClose}>&times;</button>
         <h4 className="modal-title">ポート開放</h4>
       </div>
       <div className="modal-body">
@@ -16,7 +21,7 @@ const PortModal = () => {
         <button id="port_check_manual" className="btn btn-warning" onClick={() => {/* port_check(undefined, parseInt($('#manual_port').val())) */}}>外部疎通チェック</button>
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-default" data-dismiss="modal">閉じる</button>
+        <button type="button" className="btn btn-default" data-dismiss="modal" onClick={props.handleClose}>閉じる</button>
       </div>
     </div>
   )
