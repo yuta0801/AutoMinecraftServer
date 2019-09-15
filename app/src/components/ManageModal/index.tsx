@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
-import Switch from './atoms/Form/Switch'
-import useModal from '../hooks/useModal'
+import Switch from '../atoms/Form/Switch'
+import useModal from '../../hooks/useModal'
+import { DIFFICULTIES, GAMEMODE, LEVEL_TYPE } from '../../constants'
+import { Dropdown } from './style'
 
 interface ManageModalProps {
   handleClose(): void
@@ -13,12 +15,15 @@ const ManageModal = (props: ManageModalProps) => {
     'allow-flight': false,
     'allow-nether': true,
     'announce-player-achievements': true,
+    'difficulty': 1,
     'enable-query': false,
     'enable-rcon': false,
     'enable-command-block': false,
     'force-gamemode': false,
+    'gamemode': 0,
     'generate-structures': true,
     'hardcore': false,
+    'level-type': 0,
     'online-mode': true,
     'pvp': true,
     'snooper-enabled': true,
@@ -50,40 +55,18 @@ const ManageModal = (props: ManageModalProps) => {
                   <tr><th>飛行許可[allow-flight]</th><th>無効</th><th><Switch value={state['allow-flight']} onChange={value => setState({ ...state, 'allow-flight': value })} /></th></tr>
                   <tr><th>ネザーの有無[allow-nether]</th><th>有効</th><th><Switch value={state['allow-nether']} onChange={value => setState({ ...state, 'allow-nether': value })} /></th></tr>
                   <tr><th>実績が解除させられた時のアナウンス[announce-player-achievements]</th><th>有効</th><th><Switch value={state['announce-player-achievements']} onChange={value => setState({ ...state, 'announce-player-achievements': value })} /></th></tr>
-                  <tr><th>難易度[difficulty]</th><th>イージー</th><th>
-                    <div className="dropdown"><a className="btn btn-default dropdown-toggle" id="difficulty" data-toggle="dropdown">イージー<span className="caret"></span></a>
-                      <ul className="dropdown-menu properties_drop" role="menu" aria-labelledby="difficulty">
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">ピースフル</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">イージー</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">ノーマル</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">ハード</a></li>
-                      </ul></div></th></tr>
+                  <tr><th>難易度[difficulty]</th><th>イージー</th><th><Dropdown options={DIFFICULTIES} value={state['difficulty']} onChange={value => setState({ ...state, 'difficulty': value })} /></th></tr>
                   <tr><th>GameSpy4 protocol serverの許可[enable-query]</th><th>無効</th><th><Switch value={state['enable-query']} onChange={value => setState({ ...state, 'enable-query': value })} /></th></tr>
                   <tr><th>コンソールへのリモート接続の許可[enable-rcon]</th><th>無効</th><th><Switch value={state['enable-rcon']} onChange={value => setState({ ...state, 'enable-rcon': value })} /></th></tr>
                   <tr><th>コマンドブロックの許可[enable-command-block]</th><th>無効</th><th><Switch value={state['enable-command-block']} onChange={value => setState({ ...state, 'enable-command-block': value })} /></th></tr>
                   <tr><th>ゲームモードをログアウトしても維持するか[force-gamemode]</th><th>無効</th><th><Switch value={state['force-gamemode']} onChange={value => setState({ ...state, 'force-gamemode': value })} /></th></tr>
-                  <tr><th>ゲームモード[gamemode]</th><th>サバイバル</th><th>
-                    <div className="dropdown"><a className="btn btn-default dropdown-toggle" id="gamemode" data-toggle="dropdown">サバイバル<span className="caret"></span></a>
-                      <ul className="dropdown-menu properties_drop" role="menu" aria-labelledby="gamemode">
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">サバイバル</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">クリエイティブ</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">アドベンチャー</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">スペクテイター</a></li>
-                      </ul></div></th></tr>
+                  <tr><th>ゲームモード[gamemode]</th><th>サバイバル</th><th><Dropdown options={GAMEMODE} value={state['gamemode']} onChange={value => setState({ ...state, 'gamemode': value })} /></th></tr>
                   <tr><th>建物の生成[generate-structures]</th><th>有効</th><th><Switch value={state['generate-structures']} onChange={value => setState({ ...state, 'generate-structures': value })} /></th></tr>
                   <tr><th>スーパーフラットの設定[generator-settings]</th><th></th><th><input id="generator-settings" type="text" className="form-control input-sm properties_text" /></th></tr>
                   <tr><th>ハードコアの有無[hardcore]</th><th>無効</th><th><Switch value={state['hardcore']} onChange={value => setState({ ...state, 'hardcore': value })} /></th></tr>
                   <tr><th>ワールドフォルダーの名前[level-name]</th><th>world</th><th><input id="level-name" type="text" className="form-control input-sm properties_text" defaultValue="world" /></th></tr>
                   <tr><th>ワールド作成時のシード値[level-seed]</th><th></th><th><input id="level-seed" type="text" className="form-control input-sm properties_text" /></th></tr>
-                  <tr><th>ワールド作成時の地形[level-type]</th><th>通常</th><th>
-                    <div className="dropdown"><a className="btn btn-default dropdown-toggle" id="level-type" data-toggle="dropdown">通常<span className="caret"></span></a>
-                      <ul className="dropdown-menu properties_drop" role="menu" aria-labelledby="level-type">
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">通常</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">フラット</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">大きなバイオーム</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">アンプリファイド</a></li>
-                        <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">カスタマイズ</a></li>
-                      </ul></div></th></tr>
+                  <tr><th>ワールド作成時の地形[level-type]</th><th>通常</th><th><Dropdown options={LEVEL_TYPE} value={state['level-type']} onChange={value => setState({ ...state, 'level-type': value })} /></th></tr>
                   <tr><th>ワールドの高さの限界[max-build-height]</th><th>256</th><th><input id="max-build-height" type="number" min="0" className="form-control input-sm properties_text" defaultValue="256" /></th></tr>
                   <tr><th>最大同時接続数[max-players]</th><th>20</th><th><input id="max-players" type="number" min="0" className="form-control input-sm properties_text" defaultValue="20" /></th></tr>
                   <tr><th>ウォッチドッグを待つ最大時間(ミリ秒)[max-tick-time]</th><th></th><th><input id="max-tick-time" type="number" min="0" className="form-control input-sm properties_text" /></th></tr>

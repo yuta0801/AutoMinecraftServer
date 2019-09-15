@@ -38,3 +38,15 @@ export const VERSIONS = [
     // 'Forge 1.2.4', 'Forge 1.2.3', 'Forge 1.1',
   ].map(version => ({ value: version })),
 ]
+
+export const DIFFICULTIES = [
+  'ピースフル', 'イージー', 'ノーマル', 'ハード'
+].map((label, value) => ({ label, value }))
+
+export const GAMEMODE = [
+  'サバイバル', 'クリエイティブ', 'アドベンチャー', 'スペクテイター'
+].map((label, value) => ({ label, value }))
+
+export const LEVEL_TYPE = [
+  '通常', 'フラット', '大きなバイオーム', 'アンプリファイド', 'カスタマイズ'
+].map((label, value) => ({ label, value }))
