@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 interface SwitchProps {
-  switch: boolean
+  switch?: boolean
 }
 
 export const Wrapper = styled.div`
