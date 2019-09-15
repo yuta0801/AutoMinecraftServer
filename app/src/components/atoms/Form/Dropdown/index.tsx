@@ -7,7 +7,8 @@ type Option = {
   value: string
 }
 
-interface DropdownProps {
+  style?: React.CSSProperties
+  containerStyle?: React.CSSProperties
   options: Array<string | Option>
   value: string
   onChange(value: string): void
@@ -20,13 +21,13 @@ export const Dropdown = (props: DropdownProps) => {
   const [open, toggle] = useState(false)
 
   return (
-    <Wrap>
+    <Wrap style={props.containerStyle}>
       <Button open={open} onClick={() => toggle(!open)} ref={ref} >
         { props.value || '選択' }
         <Caret />
       </Button>
       { open && (
-        <Menu>
+        <Menu style={props.style}>
           { props.options.map(option => (
             typeof option === 'string' ? (
               <Header>{option}</Header>

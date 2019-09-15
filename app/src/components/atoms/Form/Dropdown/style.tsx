@@ -6,6 +6,7 @@ export const Wrap = styled.div`
 `
 
 export const Button = styled(_Button)<{ open: Boolean }>`
+  width: 100%;
   color: #333;
   background-color: #fff;
   border-color: #ccc;
@@ -48,9 +49,6 @@ export const Menu = styled.ul`
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, .15);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, .175);
-
-  height: 200px;
-  overflow-x: hidden;
 `
 
 export const Header = styled.li`

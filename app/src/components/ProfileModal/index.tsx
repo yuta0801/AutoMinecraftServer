@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { Profile } from '../types'
-import { PROFILE_DEFAULT, VERSIONS } from '../constants'
-import useModal from '../hooks/useModal'
-import { Slider, Dropdown } from './atoms/Form'
+import { Profile } from '../../types'
+import { PROFILE_DEFAULT, VERSIONS } from '../../constants'
+import useModal from '../../hooks/useModal'
+import { Slider } from '../atoms/Form'
+import { Dropdown } from './style'
 
 interface ProfileModalProps {
   handleSave(profile: Profile): void
