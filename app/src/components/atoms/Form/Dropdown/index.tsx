@@ -6,8 +6,8 @@ type Option<T> = { label?: string, value: T }
 type Options<T> = Array<string | Option<T>>
 
 export interface DropdownProps<T> {
-  style?: React.CSSProperties
-  containerStyle?: React.CSSProperties
+  menuStyle?: React.CSSProperties
+  buttonStyle?: React.CSSProperties
   options: Options<T>
   value: T
   onChange(value: T): void
@@ -28,13 +28,13 @@ export const Dropdown = (props: DropdownProps<any>) => {
   useOutsideClick(ref, () => toggle(false), !open)
 
   return (
-    <Wrap style={props.containerStyle}>
-      <Button open={open} onClick={() => toggle(!open)} ref={ref} >
+    <Wrap>
+      <Button open={open} onClick={() => toggle(!open)} ref={ref} style={props.buttonStyle}>
         { getLabel(props.options, props.value) }
         <Caret />
       </Button>
       { open && (
-        <Menu style={props.style}>
+        <Menu style={props.menuStyle}>
           { props.options.map(option => (
             typeof option === 'string' ? (
               <Header>{option}</Header>

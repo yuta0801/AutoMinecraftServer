@@ -3,6 +3,7 @@ import { Button as _Button } from '../Button'
 
 export const Wrap = styled.div`
   position: relative;
+  display: inline-block
 `
 
 export const Button = styled(_Button)<{ open: Boolean }>`
