@@ -102,14 +102,6 @@
   display: none;
 }
 
-#profile_modal #profile_modal_body #jar_choice_div {
-  display: none;
-}
-
-#profile_modal #profile_modal_body #jar_choice_div #jar_list {
-  overflow-x: hidden;
-}
-
 #profile_modal #profile_modal_body dl dd:nth-child(13) div div:nth-child(n + 2) {
   padding: 0 1px;
 }

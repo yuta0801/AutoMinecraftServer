@@ -50,3 +50,9 @@ export const GAMEMODE = [
 export const LEVEL_TYPE = [
   '通常', 'フラット', '大きなバイオーム', 'アンプリファイド', 'カスタマイズ'
 ].map((label, value) => ({ label, value }))
+
+export const REPORT_TYPE = [
+  { value: 'report', label: '不具合報告' },
+  { value: 'port_report', label: '不具合報告(ポート開放)' },
+  { value: 'demand', label: '要望' },
+]

@@ -1,11 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import useModal from '../hooks/useModal'
+import { Dropdown } from './atoms/Form'
+import { REPORT_TYPE } from '../constants'
 
 interface ReportModalProps {
   handleClose(): void
 }
 
 const ReportModal = (props: ReportModalProps) => {
+  const [type, toggleType] = useState('report')
+
   return useModal(
     <div id="report_modal" className="modal modal-content">
       <div className="modal-header">
@@ -13,12 +17,7 @@ const ReportModal = (props: ReportModalProps) => {
         <h4 className="modal-title">不具合報告/要望</h4>
       </div>
       <div className="modal-body">
-        内容:<div className="dropdown"><a className="btn btn-default dropdown-toggle" id="report_type" data-toggle="dropdown">不具合報告<span className="caret"></span></a>
-          <ul id="report_type_select" className="dropdown-menu" role="menu" aria-labelledby="report_type">
-            <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">不具合報告</a></li>
-            <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">不具合報告(ポート開放)</a></li>
-            <li role="presentation"><a role="menuitem" tabIndex={-1} href="#">要望</a></li>
-          </ul></div>
+        内容:<Dropdown options={REPORT_TYPE} value={type} onChange={value => toggleType(value)} />
         <p id="port_text_h">このレポートには以下のデータが含まれます</p>
         <textarea id="port_text"></textarea>
         <p>できるだけ詳細にお願いします</p>

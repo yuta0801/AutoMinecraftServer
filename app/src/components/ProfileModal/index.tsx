@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { Profile } from '../../types'
 import { PROFILE_DEFAULT, VERSIONS } from '../../constants'
 import useModal from '../../hooks/useModal'
-import { Slider } from '../atoms/Form'
-import { Dropdown } from './style'
+import { Slider, Dropdown } from '../atoms/Form'
 
 interface ProfileModalProps {
   handleSave(profile: Profile): void
@@ -29,8 +28,7 @@ const ProfileModal = (props: ProfileModalProps) => {
           <dt>名前 : </dt><dd><input id="id" type="text" /><input id="name" type="text" className="form-control input-sm" value={state.name} onChange={e => setState({ ...state, name: e.target.value })} /></dd>
           <dt>データフォルダ : </dt><dd><input id="folder_input" type="text" className="form-control input-sm left-input" value={state.folder} onChange={e => setState({ ...state, folder: e.target.value })} /><button id="folder_select" type="button" className="btn btn-default right-button">参照</button></dd>
           <dt>jarファイル : </dt><dd><div id="jar_input_div"><input id="jar_input" type="text" className="form-control input-sm left-input" value={state.jar} onChange={e => setState({ ...state, jar: e.target.value })} /><button id="jar_select" type="button" className="btn btn-default right-button">参照</button></div>
-            <div id="jar_choice_div"><div className="dropdown"><a className="btn btn-default dropdown-toggle" id="jar_choice" data-toggle="dropdown">必ず選択してください<span className="caret"></span></a>
-              <ul id="jar_list" className="dropdown-menu" role="menu" aria-labelledby="jar_choice"></ul></div></div></dd>
+            { false && <Dropdown options={[]} value={''} label="必ず選択してください" onChange={() => {}} /> }</dd>
           <dt>最大メモリ : </dt><dd><Slider min={512} max={4096} step={128} className="left-input" value={state.max_memory} onChange={value => setState({ ...state, max_memory: state.min_memory > value ? state.min_memory : value })} />
             <input id="max_memory_text" type="text" className="form-control input-sm right-button" defaultValue="1024MB" value={state.max_memory + 'MB'} onChange={e => setState({ ...state, max_memory: parseInt(e.target.value) })} /></dd>
           <dt>最小メモリ : </dt><dd><Slider min={512} max={4096} step={128} className="left-input" value={state.min_memory} onChange={value => setState({ ...state, min_memory: state.max_memory < value ? state.max_memory : value })} />
@@ -41,7 +39,7 @@ const ProfileModal = (props: ProfileModalProps) => {
           { !props.new && <dd><label><input id="change_check" type="checkbox" onChange={e => toggleVersionChange(e.target.checked)} /> Minecraftバージョンを変更</label></dd> }
           { versionChange && (
             <dd>
-              <Dropdown options={VERSIONS} value={version} onChange={version => toggleVersion(version)}></Dropdown>
+              <Dropdown options={VERSIONS} value={version} onChange={version => toggleVersion(version)} height={200} />
               <label><input id="latest_check" type="checkbox" />latest(最新版、Forgeのみ)</label>
             </dd>
           ) }

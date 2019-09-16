@@ -33,7 +33,7 @@ export const Caret = styled.span`
   border-left: 4px solid transparent;
 `
 
-export const Menu = styled.ul`
+export const Menu = styled.ul<{ height?: number }>`
   position: absolute;
   top: 100%;
   left: 0;
@@ -50,6 +50,8 @@ export const Menu = styled.ul`
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, .15);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, .175);
+  overflow-x: hidden;
+  ${props => props.height && css`height: ${props.height};`}
 `
 
 export const Header = styled.li`
