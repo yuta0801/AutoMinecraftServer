@@ -1,13 +1,14 @@
 import { useEffect, RefObject } from 'react'
 
 type Ref = RefObject<Element>
-type Event = MouseEvent
 
-const useOutsideClick = (ref: Ref, callback: () => void) => {
+const useOutsideClick = (ref: Ref, callback: () => void, disabled: boolean) => {
   const handleClick = (event: Event) => {
+    if (disabled) return
     if (!ref.current || !(event.target instanceof Node)) return
     if (!ref.current.contains(event.target)) callback()
   }
+
   useEffect(() => {
     document.addEventListener('click', handleClick)
 

@@ -24,10 +24,10 @@ const getLabel = (options: Array<string | Option<any>>, value: any) => {
 }
 
 export const Dropdown = (props: DropdownProps<any>) => {
-  const ref = useRef<HTMLAnchorElement>(null)
-  useOutsideClick(ref, () => toggle(false))
-
   const [open, toggle] = useState(false)
+
+  const ref = useRef<HTMLAnchorElement>(null)
+  useOutsideClick(ref, () => toggle(false), !open)
 
   return (
     <Wrap style={props.containerStyle}>

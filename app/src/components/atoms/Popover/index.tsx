@@ -12,7 +12,7 @@ interface PopoverProp {
 const Popover = (props: PopoverProp) => {
   const ref = React.createRef<HTMLDivElement>()
 
-  useOutsideClick(ref, () => props.hide())
+  useOutsideClick(ref, () => props.hide(), false)
 
   const [rect, setRect] = useState<ClientRect | DOMRect | null>(null)
 
