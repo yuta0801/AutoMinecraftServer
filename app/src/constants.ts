@@ -41,11 +41,11 @@ export const VERSIONS = [
 
 export const DIFFICULTIES = [
   'ピースフル', 'イージー', 'ノーマル', 'ハード'
-].map((label, value) => ({ label, value }))
+].map((label, index) => ({ label, value: String(index) }))
 
 export const GAMEMODE = [
   'サバイバル', 'クリエイティブ', 'アドベンチャー', 'スペクテイター'
-].map((label, value) => ({ label, value }))
+].map((label, index) => ({ label, value: String(index) }))
 
 export const LEVEL_TYPE = [
   { value: 'DEFAULT', label: '通常' },

@@ -2,31 +2,31 @@ import React, { useState, useRef } from 'react'
 import useOutsideClick from '../../../../hooks/useOutsideClick'
 import { Wrap, Button, Caret, Menu, Header, Item } from './style'
 
-type Option<T> = { label?: string, value: T }
-type Options<T> = Array<string | Option<T>>
+type Option = { label?: string, value: string }
+type Options = Array<string | Option>
 
-export interface DropdownProps<T> {
+export interface DropdownProps {
   buttonStyle?: React.CSSProperties
   height?: number
   label?: string
-  options: Options<T>
-  value: T
-  onChange(value: T): void
+  options: Options
+  value: string
+  onChange(value: string): void
 }
 
 const getLabel = (
-  options: Options<any>,
-  value: any,
+  options: Options,
+  value: string,
   _default: string = '選択'
 ): React.ReactText => {
   if (value == null) return _default
-  const option = options.find((option): option is Option<any> =>
+  const option = options.find((option): option is Option =>
     typeof option === 'object' && option.value === value
   )
   return option ? option.label || option.value : value || _default
 }
 
-export const Dropdown = (props: DropdownProps<any>) => {
+export const Dropdown = (props: DropdownProps) => {
   const [open, toggle] = useState(false)
 
   const ref = useRef<HTMLAnchorElement>(null)
