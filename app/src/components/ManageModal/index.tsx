@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import Switch from '../atoms/Form/Switch'
 import useModal from '../../hooks/useModal'
-import { DIFFICULTIES, GAMEMODE, LEVEL_TYPE } from '../../constants'
+import {
+  DIFFICULTIES,
+  GAMEMODE,
+  LEVEL_TYPE,
+  PROPERTIES_DEFAULT
+} from '../../constants'
 import { Dropdown, TextInput } from './style'
 
 interface ManageModalProps {
@@ -11,48 +16,7 @@ interface ManageModalProps {
 const ManageModal = (props: ManageModalProps) => {
   const [currentTab, toggleTab] = useState(0)
 
-  const [state, setState] = useState({
-    'allow-flight': false,
-    'allow-nether': true,
-    'announce-player-achievements': true,
-    'difficulty': '1',
-    'enable-query': false,
-    'enable-rcon': false,
-    'enable-command-block': false,
-    'force-gamemode': false,
-    'gamemode': '0',
-    'generate-structures': true,
-    'generator-settings': '',
-    'hardcore': false,
-    'level-name': 'world',
-    'level-seed': '',
-    'level-type': 'DEFAULT',
-    'max-build-height': '256',
-    'max-players': '20',
-    'max-tick-time': '',
-    'max-world-size': '',
-    'motd': 'A Minecraft Server',
-    'network-compression-threshold': '',
-    'online-mode': true,
-    'op-permission-level': '',
-    'player-idle-timeout': '',
-    'pvp': true,
-    'quert.port': '25565',
-    'rcon.password': '',
-    'rcon.port': '25575',
-    'resource-pack': '',
-    'resource-pack-hash': '',
-    'server-ip': '',
-    'server-name': 'Unknown Server',
-    'server-port': '25565',
-    'snooper-enabled': true,
-    'spawn-animals': true,
-    'spawn-monsters': true,
-    'spawn-npcs': true,
-    'spawn-protection': '',
-    'view-distance': '10',
-    'white-list': false,
-  })
+  const [state, setState] = useState(PROPERTIES_DEFAULT)
 
   return useModal(
     <div id="manage_modal" className="modal modal-content">
