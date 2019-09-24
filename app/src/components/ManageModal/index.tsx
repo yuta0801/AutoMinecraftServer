@@ -23,16 +23,16 @@ const ManageModal = (props: ManageModalProps) => {
     'gamemode': 0,
     'generate-structures': true,
     'hardcore': false,
-    'level-type': 0,
+    'level-type': 'DEFAULT',
     'online-mode': true,
     'pvp': true,
     'snooper-enabled': true,
     'spawn-animals': true,
     'spawn-monsters': true,
     'spawn-npcs': true,
-    'white-list': true,
+    'white-list': false,
   })
-  
+
   return useModal(
     <div id="manage_modal" className="modal modal-content">
       <div className="modal-header">

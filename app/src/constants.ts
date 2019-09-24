@@ -48,8 +48,12 @@ export const GAMEMODE = [
 ].map((label, value) => ({ label, value }))
 
 export const LEVEL_TYPE = [
-  '通常', 'フラット', '大きなバイオーム', 'アンプリファイド', 'カスタマイズ'
-].map((label, value) => ({ label, value }))
+  { value: 'DEFAULT', label: '通常' },
+  { value: 'FLAT', label: 'フラット' },
+  { value: 'LARGEBIOMES', label: '大きなバイオーム' },
+  { value: 'AMPLIFIED', label: 'アンプリファイド' },
+  { value: 'CUSTOMIZED', label: 'カスタマイズ' },
+]
 
 export const REPORT_TYPE = [
   { value: 'report', label: '不具合報告' },
