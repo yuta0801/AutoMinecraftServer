@@ -1,19 +1,23 @@
 import styled, { css } from 'styled-components'
-import { Button as _Button } from '../Button'
+import { ButtonDefault } from '../Button'
 
 export const Wrap = styled.div`
   position: relative;
   display: inline-block
 `
 
-export const Button = styled(_Button)<{ open: Boolean }>`
+export const Button = styled(ButtonDefault).attrs({
+  as: 'a',
+})<{ open: Boolean }>`
   width: 100%;
-  color: #333;
-  background-color: #fff;
-  border-color: #ccc;
   ${props => props.open && css`
     background-color: #e6e6e6;
     border-color: #adadad;
+
+    &:hover {
+      background-color: #d4d4d4;
+      border-color: #8c8c8c;
+    }
   `}
 `
 

@@ -29,7 +29,8 @@ const getLabel = (
 export const Dropdown = (props: DropdownProps) => {
   const [open, toggle] = useState(false)
 
-  const ref = useRef<HTMLAnchorElement>(null)
+  // TODO: Fix type. actually it is HTMLAnchorElement
+  const ref = useRef<HTMLButtonElement>(null)
   useOutsideClick(ref, () => toggle(false), !open)
 
   return (
