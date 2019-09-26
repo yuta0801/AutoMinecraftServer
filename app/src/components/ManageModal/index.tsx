@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import useModal from '../../hooks/useModal'
 import Properties from './pane/Properties'
+import { Tabs, NavTab } from '../atoms/Tabs'
 
 interface ManageModalProps {
   handleClose(): void
@@ -16,12 +17,12 @@ const ManageModal = (props: ManageModalProps) => {
         <h4 id="manage_title" className="modal-title">サーバー/ログ/コマンド履歴/バックアップの管理</h4>
       </div>
       <div className="modal-body">
-        <ul className="nav nav-tabs">
-          <li className="active"><a id="properties_tab" href="#properties_content" onClick={() => toggleTab(0)}>サーバー設定(server.properties)</a></li>
-          <li><a id="log_tab" href="#log_content" onClick={() => toggleTab(1)}>ログファイル</a></li>
-          <li><a id="command_tab" href="#command_content" onClick={() => toggleTab(2)}>コマンド履歴</a></li>
-          <li><a id="backup_tab" href="#backup_content" onClick={() => toggleTab(3)}>バックアップ復元・削除</a></li>
-        </ul>
+        <Tabs current={currentTab} onChange={toggleTab}>
+          <NavTab index={0} label="サーバー設定(server.properties)" />
+          <NavTab index={1} label="ログファイル" />
+          <NavTab index={2} label="コマンド履歴" />
+          <NavTab index={3} label="バックアップ復元・削除" />
+        </Tabs>
         <div className="tab-content">
           { currentTab === 0 && <Properties /> }
           <div className="tab-pane in" id="log_content">
