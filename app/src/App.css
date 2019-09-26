@@ -151,16 +151,9 @@
   padding-bottom: 23px;
 }
 
-#manage_modal .modal-body .tab-content #properties_content {
+#manage_modal .modal-body .tab-content > div {
   height: 100%;
   overflow: scroll;
-}
-
-#manage_modal .modal-body .tab-content #log_content,
-#manage_modal .modal-body .tab-content #command_content,
-#manage_modal .modal-body .tab-content #backup_content {
-  height: '100%';
-  overflow: 'scroll';
 }
 
 /* report_modal */
