@@ -8,6 +8,7 @@ import schemaBuilder from './schema'
   const server = new ApolloServer({
     schema,
     playground: true,
+    introspection: true,
   })
 
   const { url } = await server.listen(4000)

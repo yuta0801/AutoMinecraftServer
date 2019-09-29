@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "name": "ams-dev",
+  "builds": [{ "src": "index.ts", "use": "@now/node" }],
+  "routes": [{ "src": "(.*)", "dest": "index.ts" }]
+}
