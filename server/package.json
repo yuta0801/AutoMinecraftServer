@@ -1,0 +1,18 @@
+{
+  "private": true,
+  "scripts": {
+    "test": "ts-node ."
+  },
+  "dependencies": {
+    "graphql": "^14.5.8",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^0.17.5",
+    "apollo-server": "^2.9.4"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.5.0",
+    "@types/node": "^12.7.8",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.3"
+  }
+}
