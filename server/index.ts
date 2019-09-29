@@ -1,5 +1,6 @@
 import { ApolloServer } from 'apollo-server'
 
+import queris from './queries'
 import schemaBuilder from './schema'
 
 !(async () => {
@@ -7,7 +8,13 @@ import schemaBuilder from './schema'
 
   const server = new ApolloServer({
     schema,
-    playground: true,
+    playground: {
+      tabs: queris.map(query => ({
+        query,
+        name: query.match(/(?:query|mutation)\s+(\w+)/)[1],
+        endpoint: 'https://ams-dev.yuta0801.now.sh/'
+      })),
+    },
     introspection: true,
   })
 
