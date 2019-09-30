@@ -37,3 +37,35 @@ export const ButtonDefault = styled(Button)`
     border-color: #8c8c8c;
   }
 `
+
+export const ButtonPrimary = styled(Button)`
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+
+  &:hover {
+    background-color: #286090;
+    border-color: #204d74;
+  }
+
+  &:active {
+    background-color: #204d74;
+    border-color: #122b40;
+  }
+`
+
+export const ButtonDanger = styled(Button)`
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+
+  &:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
+  }
+
+  &:active {
+    background-color: #ac2925;
+    border-color: #761c19;
+  }
+`

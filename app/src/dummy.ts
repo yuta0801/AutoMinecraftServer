@@ -27,3 +27,14 @@ export const dummyServers: Record<string, Server> = {
   a: { id: 'a', name: 'hoge', status: 'stopped', log: dummyLogs, profile: dummyProfile },
   b: { id: 'b', name: 'fuga', status: 'running', log: dummyLogs, profile: dummyProfile },
 }
+
+export const dummyLogFiles = [
+  '2000-01-01-1.log.gz',
+  'latest.log',
+]
+
+export const dummyBuckups = [
+  '2000-01-01_00-20-00',
+  '2000-01-01_00-10-00',
+  '2000-01-01_00-00-00',
+]

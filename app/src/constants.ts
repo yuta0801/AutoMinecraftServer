@@ -103,3 +103,16 @@ export const REPORT_TYPE = [
   { value: 'port_report', label: '不具合報告(ポート開放)' },
   { value: 'demand', label: '要望' },
 ]
+
+export const COMMANDS = [
+  'achievement', 'ban', 'ban-ip', 'banlist', 'blockdata', 'clear', 'clone',
+  'debug', 'defaultgamemode', 'deop', 'difficulty', 'effect', 'enchant',
+  'entitydata', 'execute', 'fill', 'gamemode', 'gamerule', 'give', 'help',
+  'kick', 'kill', 'list', 'me', 'op', 'pardon', 'pardon-ip', 'particle',
+  'playsound', 'replaceitem', 'save-all', 'save-off', 'save-on', 'say',
+  'scoreboard', 'seed', 'setblock', 'setidletimeout', 'setworldspawn',
+  'spawnpoint', 'spreadplayers', 'stats', 'stop', 'tell', 'tellraw',
+  'testfor', 'testforblock', 'testforblocks', 'time', 'title',
+  'toggledownfall', 'tp', 'trigger', 'weather', 'whitelist',
+  'worldborader', 'xp',
+]

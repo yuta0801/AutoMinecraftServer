@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import useModal from '../../hooks/useModal'
 import Properties from './pane/Properties'
 import { Tabs, NavTab } from '../atoms/Tabs'
+import Log from './pane/Log'
+import Command from './pane/Command'
+import Backup from './pane/Backup'
 
 interface ManageModalProps {
   handleClose(): void
@@ -25,15 +28,9 @@ const ManageModal = (props: ManageModalProps) => {
         </Tabs>
         <div className="tab-content">
           { currentTab === 0 && <Properties /> }
-          <div className="tab-pane in" id="log_content">
-
-          </div>
-          <div className="tab-pane in" id="command_content">
-
-          </div>
-          <div className="tab-pane in" id="backup_content">
-
-          </div>
+          { currentTab === 1 && <Log /> }
+          { currentTab === 2 && <Command /> }
+          { currentTab === 3 && <Backup /> }
         </div>
       </div>
       <div className="modal-footer">
