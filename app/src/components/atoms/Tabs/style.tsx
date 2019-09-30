@@ -23,11 +23,24 @@ export const Tab = styled.a<{ active: boolean }>`
   line-height: 1.42857143;
   border: 1px solid transparent;
 
+  &:hover {
+    border-color: #eee #eee #ddd;
+    background-color: #eee;
+  }
+
   ${props => props.active && css`
     color: #555;
     cursor: default;
     background-color: #fff;
     border: 1px solid #ddd;
     border-bottom-color: transparent;
+
+    &:hover {
+      color: #555;
+      cursor: default;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-bottom-color: transparent;
+    }
   `}
 `
