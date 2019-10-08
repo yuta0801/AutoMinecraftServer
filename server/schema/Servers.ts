@@ -19,7 +19,7 @@ enum Status {
 registerEnumType(Status, { name: 'Status' })
 
 @ObjectType()
-class Server {
+export class Server {
   @Field(type => ID)
   id: string
 
