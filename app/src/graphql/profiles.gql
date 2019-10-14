@@ -1,0 +1,6 @@
+query profiles {
+  profiles {
+    id
+    name
+  }
+}

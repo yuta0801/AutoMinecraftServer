@@ -1,0 +1,16 @@
+overwrite: true
+schema: "https://ams-dev.yuta0801.now.sh/"
+documents: "./src/graphql/*.gql"
+generates:
+  src/graphql/index.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHOC: false
+      withComponent: false
+      withHooks: true
+  ./graphql.schema.json:
+    plugins:
+      - "introspection"
