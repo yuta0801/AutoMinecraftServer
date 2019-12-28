@@ -24,6 +24,17 @@ const STATUS = {
   stopped: '停止',
 }
 
+const formatTime = (date?: Date) => {
+  if (!date) return '----/--/-- --:--:--'
+  const yr = date.getFullYear()
+  const mon = date.getMonth() + 1
+  const d = date.getDate()
+  const hr = date.getHours()
+  const min = date.getMinutes()
+  const sec = date.getSeconds()
+  return `${yr}/${mon}/${d} ${hr}:${min}:${sec}`
+}
+
 const ServerDetail = (props: ServerDetailProps) => {
   const { server } = props
 
@@ -37,7 +48,7 @@ const ServerDetail = (props: ServerDetailProps) => {
       <div id="row">
         <div className="col-xs-5 s-pad">
           <p>ステータス：{STATUS[server.status]}</p>
-          <p style={{ overflowX: 'hidden' }}>開始時刻：----/--/-- --:--:--</p>
+          <p style={{ overflowX: 'hidden' }}>開始時刻：{formatTime(server.startedAt)}</p>
           <p style={{ width: '50%', float: 'right' }}>無人時間：<RelativeTime date={server.noplayerAt} /></p>
           <p>経過時間：<RelativeTime date={server.startedAt} /></p>
           <p>次回予定：</p>
