@@ -25,7 +25,7 @@ const dummyProfile: Profile = {
 
 export const dummyServers: Record<string, Server> = {
   a: { id: 'a', name: 'hoge', status: 'stopped', log: dummyLogs, profile: dummyProfile },
-  b: { id: 'b', name: 'fuga', status: 'running', log: dummyLogs, profile: dummyProfile },
+  b: { id: 'b', name: 'fuga', status: 'running', log: dummyLogs, profile: dummyProfile, startedAt: new Date(), noplayerAt: new Date(), },
 }
 
 export const dummyLogFiles = [

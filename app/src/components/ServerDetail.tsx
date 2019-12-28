@@ -38,8 +38,8 @@ const ServerDetail = (props: ServerDetailProps) => {
         <div className="col-xs-5 s-pad">
           <p>ステータス：{STATUS[server.status]}</p>
           <p style={{ overflowX: 'hidden' }}>開始時刻：----/--/-- --:--:--</p>
-          <p style={{ width: '50%', float: 'right' }}>無人時間：<RelativeTime date={new Date()} /></p>
-          <p>経過時間：<RelativeTime date={new Date()} /></p>
+          <p style={{ width: '50%', float: 'right' }}>無人時間：<RelativeTime date={server.noplayerAt} /></p>
+          <p>経過時間：<RelativeTime date={server.startedAt} /></p>
           <p>次回予定：</p>
           <a onClick={() => togglePortPopup(true)} ref={popupTargetRef} style={{ width: '120%', cursor: 'pointer' }}>ポート：閉鎖</a>
           { showPortPopup && (

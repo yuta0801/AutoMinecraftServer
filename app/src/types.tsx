@@ -25,4 +25,6 @@ export interface Server {
   log: string[][]
   profile: Profile
   port?: Port
+  startedAt?: Date
+  noplayerAt?: Date
 }

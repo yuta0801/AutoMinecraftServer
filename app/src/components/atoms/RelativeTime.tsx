@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import useMutable from '../../hooks/useMutable'
 
 interface RelativeTimeProps {
@@ -19,13 +19,13 @@ const format = (ms: number) => {
   return padding`${h}:${m}:${s}`
 }
 
-const calculate = (date?: Date) => {
+const RelativeTime = ({ date }: RelativeTimeProps) => {
+  const calculate = useCallback(() => {
   if (!date) return '--:--:--'
   return format(Date.now() - date.getTime())
-}
+  }, [date])
 
-const RelativeTime = (props: RelativeTimeProps) => {
-  const time = useMutable(() => calculate(props.date))
+  const time = useMutable(calculate)
 
   return <>{time}</>
 }
