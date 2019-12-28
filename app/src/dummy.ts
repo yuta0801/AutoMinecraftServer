@@ -13,6 +13,7 @@ const dummyLogs = [
 
 const dummyProfile: Profile = {
   name: 'Hoge',
+  id: 'c299b91a-7dba-4139-9de8-666712ec1339',
   folder: '/path/to/server',
   jar: '/path/to/server/minecraft_server.jar',
   max_memory: 1024,

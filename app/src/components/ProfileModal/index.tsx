@@ -3,6 +3,7 @@ import { Profile } from '../../types'
 import { PROFILE_DEFAULT, VERSIONS } from '../../constants'
 import useModal from '../../hooks/useModal'
 import { Slider, Dropdown } from '../atoms/Form'
+import uuid from 'uuid/v4'
 
 interface ProfileModalProps {
   handleSave(profile: Profile): void
@@ -11,8 +12,10 @@ interface ProfileModalProps {
   new?: boolean
 }
 
+const newProfile = () => ({ id: uuid(), ...PROFILE_DEFAULT })
+
 const ProfileModal = (props: ProfileModalProps) => {
-  const [state, setState] = useState(props.profile || PROFILE_DEFAULT)
+  const [state, setState] = useState(props.profile || newProfile())
   const [versionChange, toggleVersionChange] = useState(props.new || false)
   const [version, toggleVersion] = useState('')
 
