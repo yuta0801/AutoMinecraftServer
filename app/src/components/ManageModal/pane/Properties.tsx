@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Switch from '../../atoms/Form/Switch'
-import { Dropdown, TextInput } from '../style'
+import { TextInput } from '../../atoms/Form/TextInput'
+import { Dropdown } from '../style'
+import { PropertiesContainer } from './style'
 import {
   DIFFICULTIES,
   GAMEMODE,
@@ -16,7 +18,7 @@ const Properties = () => {
   >(name: K, value: T) => setState({ ...state, [name]: value })
 
   return (
-    <div className="tab-pane in active" id="properties_content">
+    <PropertiesContainer className="tab-pane in active" id="properties_content">
       <table className="table table-hover table-condensed manage_table">
         <thead><tr><th data-sortable="false">項目</th><th data-sortable="false">初期値</th><th data-sortable="false">設定</th></tr></thead>
         <tbody>
@@ -62,7 +64,7 @@ const Properties = () => {
           <tr><th>ホワイトリストの有効の有無[white-list]</th><th>無効</th><th><Switch value={state['white-list']} onChange={value => update('white-list', value)} /></th></tr>
         </tbody>
       </table>
-    </div>
+    </PropertiesContainer>
   )
 }
 
