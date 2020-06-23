@@ -3,7 +3,7 @@ import { Profile } from '../../types'
 import { PROFILE_DEFAULT, VERSIONS } from '../../constants'
 import useModal from '../../hooks/useModal'
 import { Slider, Dropdown } from '../atoms/Form'
-import uuid from 'uuid/v4'
+import { v4 as uuid } from 'uuid'
 
 interface ProfileModalProps {
   handleSave(profile: Profile): void
