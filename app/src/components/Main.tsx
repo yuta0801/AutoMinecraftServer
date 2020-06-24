@@ -2,9 +2,13 @@ import React from 'react'
 import New from './New'
 import News from './News'
 import Servers from './Servers'
-import { dummyServers } from '../dummy'
+import { Server } from '../types'
 
-const Main = () => {
+interface MainProps {
+  servers: Record<string, Server>
+}
+
+const Main = (props: MainProps) => {
   return (
     <div id="main">
       <div id="main_left" className="col-xs-4 s-pad">
@@ -18,7 +22,7 @@ const Main = () => {
         <New />
       </div>
       <div id="main_right" className="col-xs-8 s-pad">
-        <Servers servers={dummyServers} />
+        <Servers servers={props.servers} />
       </div>
     </div>
   )

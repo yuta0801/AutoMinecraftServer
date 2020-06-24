@@ -29,3 +29,5 @@ export interface Server {
   startedAt?: Date
   noplayerAt?: Date
 }
+
+export type Logs = [string, string, string][]

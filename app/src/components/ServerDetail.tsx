@@ -6,15 +6,12 @@ import ProfileModal from './ProfileModal'
 import EulaModal from './EulaModal'
 import RelativeTime from './atoms/RelativeTime'
 import Popover from './atoms/Popover'
+import { startServer, stopServer, killServer, restartServer } from '../mock'
 
 interface ServerDetailProps {
   server: Server,
   handleOpenDirectry?(): void,
   handleRemoveProfile?(): void,
-  handleRestart?(): void,
-  handleStop?(): void,
-  handleStart?(): void,
-  handleKill?(): void,
 }
 
 const STATUS = {
@@ -74,10 +71,10 @@ const ServerDetail = (props: ServerDetailProps) => {
           <button className="btn btn-warning bt-two" onClick={() => toggleProfileModal(true)} disabled={server.status !== 'stopped'}>プロファイルの編集</button>
           { showProfileModal && <ProfileModal profile={server.profile} handleClose={() => toggleProfileModal(false)} handleSave={() => {}} /> }
           <button className="btn btn-danger bt-two" onClick={props.handleRemoveProfile} disabled={server.status !== 'stopped'}>プロファイルの削除</button>
-          <button className="btn btn-info pull-right bt-four" onClick={props.handleRestart} disabled={server.status !== 'running'}>再起動</button>
-          <button className="btn btn-danger pull-right bt-four" onClick={props.handleStop} disabled={server.status !== 'running'}>停止</button>
-          <button className="btn btn-success pull-right bt-four" onClick={props.handleStart} disabled={server.status !== 'stopped'}>起動</button>
-          <button className="btn btn-danger pull-right bt-four" onClick={props.handleKill}>強制終了</button>
+          <button className="btn btn-info pull-right bt-four" onClick={() => restartServer(server.id)} disabled={server.status !== 'running'}>再起動</button>
+          <button className="btn btn-danger pull-right bt-four" onClick={() => stopServer(server.id)} disabled={server.status !== 'running'}>停止</button>
+          <button className="btn btn-success pull-right bt-four" onClick={() => startServer(server.id)} disabled={server.status !== 'stopped'}>起動</button>
+          <button className="btn btn-danger pull-right bt-four" onClick={() => killServer(server.id)}>強制終了</button>
         </div>
       </div>
       <ServerLog logs={server.log} />
