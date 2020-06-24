@@ -31,7 +31,7 @@ export const NavTab = (props: NavTabProps) => {
   return (
     <TabWrap>
       <Tab
-        active={current == props.index}
+        active={current === props.index}
         onClick={() => onChange(props.index)}
       >
         { props.label }

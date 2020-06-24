@@ -51,7 +51,7 @@ const ProfileModal = (props: ProfileModalProps) => {
         <p id="progress_text" className="text-right">処理中...(0%)</p>
       </div>
       <div id="profile_modal_footer" className="modal-footer">
-        <button id="profile_save" type="button" onClick={() => (props.handleSave(state), props.handleClose())} className="btn btn-primary">保存</button>
+        <button id="profile_save" type="button" onClick={() => { props.handleSave(state); props.handleClose() }} className="btn btn-primary">保存</button>
         <button type="button" onClick={props.handleClose} className="btn btn-default" data-dismiss="modal">キャンセル</button>
       </div>
     </div>

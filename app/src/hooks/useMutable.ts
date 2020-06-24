@@ -11,7 +11,7 @@ const useMutable = <T>(calculate: () => T, interval?: number) => {
     }, interval || 1000)
 
     return () => clearInterval(timer)
-  }, [calculate])
+  }, [calculate, interval])
 
   return state
 }

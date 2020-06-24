@@ -19,7 +19,7 @@ const Popover = (props: PopoverProp) => {
   useEffect(() => {
     if (props.target.current)
       setRect(props.target.current.getBoundingClientRect())
-  }, [])
+  }, [props.target])
 
   const position = rect && {
     top: rect.height,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Slider as _Slider } from './style'
+import { Slider as BaseSlider } from './style'
 
 interface SliderProps {
   className?: string // TODO: Remove this
@@ -11,7 +11,7 @@ interface SliderProps {
 }
 
 export const Slider = ({ onChange, ...props }: SliderProps) => (
-  <_Slider
+  <BaseSlider
     onChange={e => onChange && onChange(Number(e.target.value))}
     {...props}
   />

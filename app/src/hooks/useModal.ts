@@ -5,12 +5,13 @@ const useModal = (component: ReactNode) => {
   const root = useRef(document.createElement('div'))
 
   useEffect(() => {
-    document.body.appendChild(root.current)
+    const node = root.current
+    document.body.appendChild(node)
 
     return () => {
-      document.body.removeChild(root.current)
+      document.body.removeChild(node)
     }
-  }, [])
+  }, [root])
 
   return createPortal(component, root.current)
 }
