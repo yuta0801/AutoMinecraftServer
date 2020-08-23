@@ -24,12 +24,21 @@ const Properties = () => {
         <tbody>
           <tr><th>飛行許可[allow-flight]</th><th>無効</th><th><Switch value={state['allow-flight']} onChange={value => update('allow-flight', value)} /></th></tr>
           <tr><th>ネザーの有無[allow-nether]</th><th>有効</th><th><Switch value={state['allow-nether']} onChange={value => update('allow-nether', value)} /></th></tr>
+          <tr><th>コンソールのコマンドをOPに通知[broadcast-console-to-ops]</th><th>有効</th><th><Switch value={state['broadcast-console-to-ops']} onChange={value => update('broadcast-console-to-ops', value)} /></th></tr>
+          <tr><th>RconのコマンドをOPに通知[broadcast-rcon-to-ops]</th><th>有効</th><th><Switch value={state['broadcast-rcon-to-ops']} onChange={value => update('broadcast-rcon-to-ops', value)} /></th></tr>
           <tr><th>実績が解除させられた時のアナウンス[announce-player-achievements]</th><th>有効</th><th><Switch value={state['announce-player-achievements']} onChange={value => update('announce-player-achievements', value)} /></th></tr>
           <tr><th>難易度[difficulty]</th><th>イージー</th><th><Dropdown options={DIFFICULTIES} value={state['difficulty']} onChange={value => update('difficulty', value)} /></th></tr>
           <tr><th>GameSpy4 protocol serverの許可[enable-query]</th><th>無効</th><th><Switch value={state['enable-query']} onChange={value => update('enable-query', value)} /></th></tr>
           <tr><th>コンソールへのリモート接続の許可[enable-rcon]</th><th>無効</th><th><Switch value={state['enable-rcon']} onChange={value => update('enable-rcon', value)} /></th></tr>
           <tr><th>コマンドブロックの許可[enable-command-block]</th><th>無効</th><th><Switch value={state['enable-command-block']} onChange={value => update('enable-command-block', value)} /></th></tr>
+          <tr><th>MBeanオブジェクトの公開[enable-jms-monitoring]</th><th>無効</th><th><Switch value={state['enable-jmx-monitoring']} onChange={value => update('enable-jmx-monitoring', value)} /></th></tr>
+          <tr><th>エンティティをクライアントに送信する距離(%)[entity-broadcast-range-percentage]</th><th>100</th><th><TextInput type="number" value={state['entity-broadcast-range-percentage']} onChange={value => update('entity-broadcast-range-percentage', value)} min="0" max="500" /></th></tr>
+          <tr><th>チャンクをメインスレッドで書き込む[sync-chunk-writes]</th><th>有効</th><th><Switch value={state['sync-chunk-writes']} onChange={value => update('sync-chunk-writes', value)} /></th></tr>
+          <tr><th>クライアントにサーバーがオンラインかどうかを表示[enable-status]</th><th>有効</th><th><Switch value={state['enable-status']} onChange={value => update('enable-status', value)} /></th></tr>
           <tr><th>ゲームモードをログアウトしても維持するか[force-gamemode]</th><th>無効</th><th><Switch value={state['force-gamemode']} onChange={value => update('force-gamemode', value)} /></th></tr>
+          <tr><th>Functionの権限内容[function-permission-level]</th><th>2</th><th><TextInput type="number" value={state['function-permission-level']} onChange={value => update('function-permission-level', value)} min="1" max="4" /></th></tr>
+          <tr><th>プロキシ・VPNの接続を拒否するか[prevent-proxy-connections]</th><th>無効</th><th><Switch value={state['prevent-proxy-connections']} onChange={value => update('prevent-proxy-connections', value)} /></th></tr>
+          <tr><th>プレイヤーが送信できる最大パケット[rate-limit]</th><th>0 (無効)</th><th><TextInput type="number" value={state['rate-limit']} onChange={value => update('rate-limit', value)} min="0" /></th></tr>
           <tr><th>ゲームモード[gamemode]</th><th>サバイバル</th><th><Dropdown options={GAMEMODE} value={state['gamemode']} onChange={value => update('gamemode', value)} /></th></tr>
           <tr><th>建物の生成[generate-structures]</th><th>有効</th><th><Switch value={state['generate-structures']} onChange={value => update('generate-structures', value)} /></th></tr>
           <tr><th>スーパーフラットの設定[generator-settings]</th><th></th><th><TextInput type="text" value={state['generator-settings']} onChange={value => update('generator-settings', value)} /></th></tr>
@@ -44,7 +53,7 @@ const Properties = () => {
           <tr><th>サーバーの説明[motd]</th><th>A Minecraft Server</th><th><TextInput type="text" value={state['motd']} onChange={value => update('motd', value)} /></th></tr>
           <tr><th>通信時の圧縮しきい値[network-compression-threshold]</th><th></th><th><TextInput type="text" value={state['network-compression-threshold']} onChange={value => update('network-compression-threshold', value)} /></th></tr>
           <tr><th>ログイン時の認証設定[online-mode]</th><th>有効</th><th><Switch value={state['online-mode']} onChange={value => update('online-mode', value)} /></th></tr>
-          <tr><th>OP権限の権限内容[op-permission-level]</th><th></th><th><TextInput type="text" value={state['op-permission-level']} onChange={value => update('op-permission-level', value)} /></th></tr>
+          <tr><th>OP権限の権限内容[op-permission-level]</th><th>4</th><th><TextInput type="text" value={state['op-permission-level']} onChange={value => update('op-permission-level', value)} /></th></tr>
           <tr><th>自動kickするタイムアウト時間[player-idle-timeout]</th><th></th><th><TextInput type="number" value={state['player-idle-timeout']} onChange={value => update('player-idle-timeout', value)} min="0" /></th></tr>
           <tr><th>プレイヤー間の攻撃の有無[pvp]</th><th>有効</th><th><Switch value={state['pvp']} onChange={value => update('pvp', value)} /></th></tr>
           <tr><th>GameSpy4 protocol serverのポート[quert.port]</th><th>25565</th><th><TextInput type="number" value={state['quert.port']} onChange={value => update('quert.port', value)} min="0" /></th></tr>
@@ -62,6 +71,7 @@ const Properties = () => {
           <tr><th>スポーン地点から編集できなくなるブロックの範囲[spawn-protection]</th><th></th><th><TextInput type="text" value={state['spawn-protection']} onChange={value => update('spawn-protection', value)} /></th></tr>
           <tr><th>サーバーで設定するチャンクの制限範囲[view-distance]</th><th>10</th><th><TextInput type="number" value={state['view-distance']} onChange={value => update('view-distance', value)} min="0" /></th></tr>
           <tr><th>ホワイトリストの有効の有無[white-list]</th><th>無効</th><th><Switch value={state['white-list']} onChange={value => update('white-list', value)} /></th></tr>
+          <tr><th>ホワイトリストを強制する[enforce-whitelist]</th><th>無効</th><th><Switch value={state['enforce-whitelist']} onChange={value => update('enforce-whitelist', value)} /></th></tr>
         </tbody>
       </table>
     </PropertiesContainer>
